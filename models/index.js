@@ -8,8 +8,8 @@ const env = process.env.NODE_ENV || 'development';
 const isDev = require('electron-is-dev');
 
 const config = isDev
-  ? require('../config/config.json')
-  : require(`${path.join(__dirname, '', '../config/config.json')}`)[env];
+  ? require('../config/config')[env]
+  : require(`${path.join(__dirname, '', '../config/config.js')}`)[env];
 
 const db = {};
 

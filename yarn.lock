@@ -9616,6 +9616,13 @@ pkg-up@3.1.0:
   dependencies:
     find-up "^3.0.0"
 
+platform-folders@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/platform-folders/-/platform-folders-0.5.3.tgz#9643987c0c33048862ab1e9628a7476432ba95b3"
+  integrity sha512-zUwwYCZwixYJdenycdfd2YoFtiAHRqIQYlUeGn3PR1+lS9h3iojM33srwXH65S2qe+56C6D5YgYSU+WObbhVwg==
+  dependencies:
+    bindings "^1.5.0"
+
 plist@^3.0.1:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/plist/-/plist-3.0.2.tgz#74bbf011124b90421c22d15779cee60060ba95bc"
