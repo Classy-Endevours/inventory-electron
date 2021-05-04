@@ -1,7 +1,10 @@
 /* eslint-disable import/no-dynamic-require */
 const path = require('path');
 
-const models = require(`${path.join(__dirname, './models')}`);
+const isDev = require('electron-is-dev');
+const models = isDev
+  ? require('../models')
+  : require(`${path.join(__dirname, '', '../models')}`);
 
 const { users } = models;
 const { ipcMain } = require('electron');
