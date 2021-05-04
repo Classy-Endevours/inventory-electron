@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeValue } from './reducer';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+// import { changeValue } from './reducer';
 
 function HelloWorld() {
+  const history = useHistory();
   const { value } = useSelector((state) => state.helloWorldReducer);
   const [text, setText] = useState('');
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  function handleClick() {
+    history.push('/HelloWorld1');
+  }
   return (
     <div>
       <h1>{value}</h1>
@@ -14,7 +19,8 @@ function HelloWorld() {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button type="button" onClick={() => dispatch(changeValue(text))}>
+      {/* <button type="button" onClick={() => dispatch(changeValue(text))}> */}
+      <button type="button" onClick={handleClick}>
         Submit
       </button>
     </div>

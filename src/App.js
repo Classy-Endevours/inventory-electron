@@ -1,8 +1,8 @@
 import './App.scss';
-import HelloWorld from './components/HelloWorld';
+import Routes from './routes/Routes';
 
 function App() {
-  return <HelloWorld />;
+  return <Routes />;
 }
 
 export default App;
