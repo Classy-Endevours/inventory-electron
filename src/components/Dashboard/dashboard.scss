@@ -1,0 +1,12 @@
+.container {
+  //   width: 500px;
+  //   height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+}
+.container .primary_container,
+.container .secondary_container {
+  width: 40%;
+}
