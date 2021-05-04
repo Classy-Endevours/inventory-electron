@@ -39,24 +39,9 @@
   "build": {
     "extends": null,
     "appId": "com.electron-react-boilerplate",
-    "files": [
-      "dist/**/*",
-      "build/**/*",
-      "node_modules/**/*",
-      "package.json"
-    ],
     "directories": {
       "buildResources": "assets"
-    },
-    "extraResources": [
-      {
-        "from": "./models",
-        "to": "models",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ]
+    }
   },
   "eslintConfig": {
     "extends": [
