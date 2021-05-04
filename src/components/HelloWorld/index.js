@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeValue } from './reducer';
 
 function HelloWorld() {
-  const { value } = useSelector((state) => state.helloWorldReducer);
+  const { value, dBData } = useSelector((state) => state.helloWorldReducer);
   const [text, setText] = useState('');
   const dispatch = useDispatch();
+  // const electron = window.require('electron');
+  console.log(window);
   return (
     <div>
       <h1>{value}</h1>
@@ -17,6 +19,7 @@ function HelloWorld() {
       <button type="button" onClick={() => dispatch(changeValue(text))}>
         Submit
       </button>
+      <p>DB Value{JSON.stringify(dBData)}</p>
     </div>
   );
 }

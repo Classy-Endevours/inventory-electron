@@ -1,0 +1,17 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "./db.sqlite3",
+    "query": { "raw": true }
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "./db.sqlite3",
+    "query": { "raw": true }
+  },
+  "production": {
+    "dialect": "sqlite",
+    "storage": "./db.sqlite3",
+    "query": { "raw": true }
+  }
+}
