@@ -18,7 +18,7 @@ function Routes() {
         <PublicRoute exact path="/" login={false}>
           <HelloWorld />
         </PublicRoute>
-        <PrivateRoute path="/HelloWorld1" login={false}>
+        <PrivateRoute path="/HelloWorld1" login>
           <HelloWorld1 />
         </PrivateRoute>
       </Switch>

@@ -1,10 +1,13 @@
-const { app, BrowserWindow } = require('electron');
+const electron = require('electron');
 
 const path = require('path');
 const isDev = require('electron-is-dev');
 
 require('@electron/remote/main').initialize();
 
+require('./MainTread');
+
+const { app, BrowserWindow } = electron;
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -13,6 +16,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
+      contextIsolation: false,
     },
   });
 

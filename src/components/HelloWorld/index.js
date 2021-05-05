@@ -23,6 +23,7 @@ function HelloWorld() {
       <button type="button" onClick={handleClick}>
         Submit
       </button>
+      {/* <p>DB Value{JSON.stringify(dBData)}</p> */}
     </div>
   );
 }
