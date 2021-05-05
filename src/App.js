@@ -1,8 +1,8 @@
 import './App.scss';
-import HomePage from './components/HomePage';
+import Routes from './routes/Routes';
 
 function App() {
-  return <HomePage />;
+  return <Routes />;
 }
 
 export default App;
