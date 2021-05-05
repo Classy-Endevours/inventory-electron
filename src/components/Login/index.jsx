@@ -5,12 +5,17 @@ import { Row, Col, Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import Paragraph from 'antd/lib/typography/Paragraph';
+import { useHistory } from 'react-router-dom';
 
 // import { Content } from 'antd/lib/layout/layout';
 
 // const { Title } = Typography;
 
 export default function Login() {
+  const history = useHistory();
+  function handleClick() {
+    history.push('/HelloWorld1');
+  }
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
@@ -78,6 +83,7 @@ export default function Login() {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                  onClick={handleClick}
                 >
                   Log in
                 </Button>

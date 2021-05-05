@@ -5,14 +5,13 @@ const helloWorldSlice = createSlice({
   name: 'helloWorld',
   initialState: {
     value: 'Hello World',
-    dBData: {},
   },
   reducers: {
     changeValue: () => {},
     setValue: (state, action) => {
       return {
         ...state,
-        dBData: action.payload,
+        value: action.payload,
       };
     },
   },

@@ -1,9 +1,8 @@
 import './App.scss';
-// import HomePage from './components/HomePage';
-import Login from './components/Login';
+import Routes from './routes/Routes';
 
 function App() {
-  return <Login />;
+  return <Routes />;
 }
 
 export default App;
