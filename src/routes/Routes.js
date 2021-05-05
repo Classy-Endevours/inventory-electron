@@ -7,7 +7,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import HelloWorld from '../components/HelloWorld';
+import Login from '../components/Login';
 import HelloWorld1 from '../components/HelloWorld copy';
 
 function Routes() {
@@ -16,7 +16,7 @@ function Routes() {
     <Router>
       <Switch>
         <PublicRoute exact path="/" login={false}>
-          <HelloWorld />
+          <Login />
         </PublicRoute>
         <PrivateRoute path="/HelloWorld1" login>
           <HelloWorld1 />
