@@ -1,13 +1,13 @@
 import React from 'react';
-import { Layout, Row, Col, Divider } from 'antd';
-import HeaderChips from '../../common/dashboard/HeaderChips';
-import LineGraph from '../../common/dashboard/LineGraph';
+import { Layout, Row, Col } from 'antd';
+import HeaderChips from '../../common/components/dashboard/HeaderChips';
+import LineGraph from '../../common/components/dashboard/LineGraph';
 
 const { Content } = Layout;
 
 export default function Dashboard() {
   return (
-    <Content style={{ padding: '0 24px', minHeight: '100%' }}>
+    <Content style={{ padding: '0 24px' }}>
       <Row align="middle" justify="space-around">
         <Col span={5}>
           <HeaderChips title="Total Inventory">
@@ -66,9 +66,9 @@ export default function Dashboard() {
           </HeaderChips>
         </Col>
       </Row>
-      <Divider orientation="left" />
+      {/* <Divider orientation="left" /> */}
       <Row>
-        <Col style={{ height: '300px' }} span={24}>
+        <Col span={24}>
           <LineGraph />
         </Col>
       </Row>
