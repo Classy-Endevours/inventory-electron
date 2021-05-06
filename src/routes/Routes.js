@@ -8,7 +8,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import Login from '../components/Login';
-import HelloWorld1 from '../components/HelloWorld copy';
+import HomePage from '../components/HomePage';
 
 function Routes() {
   // let location = useLocation();
@@ -18,8 +18,8 @@ function Routes() {
         <PublicRoute exact path="/" login={false}>
           <Login />
         </PublicRoute>
-        <PrivateRoute path="/HelloWorld1" login>
-          <HelloWorld1 />
+        <PrivateRoute path="/Dashboard" login>
+          <HomePage />
         </PrivateRoute>
       </Switch>
     </Router>

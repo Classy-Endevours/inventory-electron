@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 export default function Login() {
   const history = useHistory();
   function handleClick() {
-    history.push('/HelloWorld1');
+    history.push('/Dashboard');
   }
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
