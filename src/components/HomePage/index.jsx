@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Dashboard from '../Dashboard';
 import {
   DashboardSider,
@@ -10,8 +12,11 @@ import {
   DashboardContentLayout,
   DashboardHeader,
 } from '../../common/uielements/Dasbord.styles';
+import { clear } from '../Login/reducer';
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   return (
     <DashboardParentLayout>
       <DashboardHeader className="header" theme="light">
@@ -32,7 +37,16 @@ export default function HomePage() {
             <DashboardMenu.Item key="5">Inventory</DashboardMenu.Item>
             <DashboardMenu.Item key="6">Challan</DashboardMenu.Item>
             <DashboardMenu.Item key="7">Settings</DashboardMenu.Item>
-            <DashboardMenu.Item key="8">Logout</DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="8"
+              onClick={async () => {
+                dispatch(clear());
+                await localStorage.setItem('login', false);
+                history.push('/');
+              }}
+            >
+              Logout
+            </DashboardMenu.Item>
           </DashboardMenu>
         </DashboardSider>
         <DashboardChildLayout>

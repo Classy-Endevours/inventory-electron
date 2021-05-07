@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga/effects';
-import { changeValue } from '../../components/HelloWorld/reducer';
-import changeValueSaga from '../../components/HelloWorld/saga';
+import { login } from '../../components/Login/reducer';
+import loginSaga from '../../components/Login/saga';
 
 export default function* watcherSagas() {
-  yield takeLatest(changeValue.type, changeValueSaga);
+  yield takeLatest(login.type, loginSaga);
 }

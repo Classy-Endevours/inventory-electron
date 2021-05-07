@@ -15,10 +15,10 @@ function Routes() {
   return (
     <Router>
       <Switch>
-        <PublicRoute exact path="/" login={false}>
+        <PublicRoute exact path="/">
           <Login />
         </PublicRoute>
-        <PrivateRoute path="/Dashboard" login>
+        <PrivateRoute path="/Dashboard">
           <HomePage />
         </PrivateRoute>
       </Switch>
@@ -29,7 +29,8 @@ export default Routes;
 
 // Define public Route
 
-function PublicRoute({ children, login, ...rest }) {
+function PublicRoute({ children, ...rest }) {
+  const login = localStorage.getItem('login') !== 'false';
   return (
     <Route
       {...rest}
@@ -37,7 +38,7 @@ function PublicRoute({ children, login, ...rest }) {
         login ? (
           <Redirect
             to={{
-              pathname: '/HelloWorld1',
+              pathname: '/Dashboard',
               state: { from: location },
             }}
           />
@@ -50,7 +51,8 @@ function PublicRoute({ children, login, ...rest }) {
 }
 
 // Define Private Route
-function PrivateRoute({ children, login, ...rest }) {
+function PrivateRoute({ children, ...rest }) {
+  const login = localStorage.getItem('login') !== 'false';
   return (
     <Route
       {...rest}

@@ -15,7 +15,7 @@ module.exports = {
         'users',
         [
           {
-            userName: 'admin',
+            username: 'admin',
             password: hashedPassword,
             createdAt: new Date(),
             updatedAt: new Date(),

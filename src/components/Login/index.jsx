@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import 'antd/dist/antd.css';
 import './index.scss';
-import { Row, Col, Form, Input, Button, Card } from 'antd';
+import { Row, Col, Form, Input, Button, Card, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Title from 'antd/lib/typography/Title';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import { useHistory } from 'react-router-dom';
+import { login } from './reducer';
 
 // import { Content } from 'antd/lib/layout/layout';
 
@@ -13,12 +15,33 @@ import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const history = useHistory();
-  function handleClick() {
-    history.push('/Dashboard');
-  }
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { isLoading, message, success, fail } = useSelector(
+    (state) => state.loginReducer,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(async () => {
+    if (success && !fail) {
+      notification.success({
+        message: 'Success',
+        description: message,
+        duration: 2,
+      });
+      localStorage.setItem('login', true);
+      history.push('/Dashboard');
+    } else if (!success && fail) {
+      notification.error({
+        message: 'Error',
+        description: message,
+        duration: 2,
+      });
+    }
+  }, [isLoading, success, fail]);
+  // function handleClick() {
+  //   history.push('/Dashboard');
+  // }
   return (
     <Row className="login_container" align="top" style={{ height: '100vh' }}>
       <Row>
@@ -35,6 +58,7 @@ export default function Login() {
               width: 600,
               borderRadius: '10px',
             }}
+            loading={isLoading}
           >
             <Title className="heading">Login</Title>
             <Paragraph level={4} className="sub_heading">
@@ -44,7 +68,6 @@ export default function Login() {
               name="normal_login"
               initialValues={{ size: 'large' }}
               className="login-form"
-              onFinish={onFinish}
             >
               <Form.Item
                 name="username"
@@ -59,6 +82,8 @@ export default function Login() {
                   size="large"
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </Form.Item>
               <Form.Item
@@ -75,6 +100,8 @@ export default function Login() {
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Item>
 
@@ -83,7 +110,8 @@ export default function Login() {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
-                  onClick={handleClick}
+                  onClick={() => dispatch(login({ username, password }))}
+                  disabled={!(password !== '' && username !== '')}
                 >
                   Log in
                 </Button>
