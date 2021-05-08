@@ -3,7 +3,8 @@ import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Dashboard from '../Dashboard';
+import Item from '../Item';
+// import Dashboard from '../Dashboard';
 import {
   DashboardSider,
   DashboardMenu,
@@ -51,7 +52,7 @@ export default function HomePage() {
         </DashboardSider>
         <DashboardChildLayout>
           <DashboardContentLayout>
-            <Dashboard />
+            <Item />
           </DashboardContentLayout>
           {/* <DashboardFooter>Rajesh Exports &#169;2021</DashboardFooter> */}
         </DashboardChildLayout>
