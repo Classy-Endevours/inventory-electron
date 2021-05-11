@@ -7,7 +7,7 @@ import {
   RowItemInfoCard,
   RowItemRecentCard,
 } from '../../common/components/regular/RowItemInfoCard';
-import { getItems, addItems } from './reducer';
+import { getItems, addItems, editItems } from './reducer';
 import {
   ColorerdTable,
   BorderedCard,
@@ -28,6 +28,7 @@ const Item = () => {
     recentItems,
     mostOutItems,
     isAddLoading,
+    isEditLoading,
   } = useSelector((state) => state.ItemsReducer);
   const dispatch = useDispatch();
 
@@ -43,23 +44,25 @@ const Item = () => {
         dispatch(addItems(data));
         break;
       case 'edit':
+        dispatch(editItems(data));
         break;
-
       default:
         break;
     }
   };
   return (
     <Content>
-      <AddItemForm
-        title="Add New Item"
-        isOpen={addItemModal}
-        onOk={(data) => onOk(data)}
-        onCancel={() => setAddItemModal(!addItemModal)}
-        mode={mode}
-        initialValues={currentObject}
-        loading={isAddLoading}
-      />
+      {addItemModal && (
+        <AddItemForm
+          title="Add New Item"
+          isOpen={addItemModal}
+          onOk={(data) => onOk(data)}
+          onCancel={() => setAddItemModal(!addItemModal)}
+          initialValues={currentObject}
+          setCurrentObject={setCurrentObject}
+          loading={mode === 'new' ? isAddLoading : isEditLoading}
+        />
+      )}
 
       <Row justify="end">
         <Space>
@@ -86,9 +89,8 @@ const Item = () => {
         <Col span={17}>
           <ColorerdTable
             columns={getColumns((item) => {
-              console.log(item);
               setCurrentObject(item);
-              setMode('new');
+              setMode('edit');
               setAddItemModal(true);
             })}
             dataSource={items}

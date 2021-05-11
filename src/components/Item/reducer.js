@@ -12,6 +12,9 @@ const ItemSlicer = createSlice({
     isAddLoading: false,
     isAddSuccess: false,
     isAddError: false,
+    isEditLoading: false,
+    isEditSuccess: false,
+    isEditError: false,
   },
   reducers: {
     getItems: (state) => ({
@@ -53,6 +56,24 @@ const ItemSlicer = createSlice({
       isAddSuccess: false,
       isAddError: true,
     }),
+    editItems: (state) => ({
+      ...state,
+      isEditLoading: true,
+      isEditSuccess: false,
+      isEditError: false,
+    }),
+    editItemsSuccess: (state) => ({
+      ...state,
+      isEditLoading: false,
+      isEditSuccess: true,
+      isEditError: false,
+    }),
+    editItemsFailed: (state) => ({
+      ...state,
+      isEditLoading: false,
+      isEditSuccess: false,
+      isEditError: true,
+    }),
   },
 });
 
@@ -63,6 +84,9 @@ export const {
   addItems,
   addItemsSuccess,
   addItemsFailed,
+  editItems,
+  editItemsSuccess,
+  editItemsFailed,
 } = ItemSlicer.actions;
 
 export default ItemSlicer.reducer;

@@ -15,26 +15,25 @@ export function AddItemForm({
   onCancel,
   loading,
   initialValues = {},
+  setCurrentObject,
 }) {
   const [form] = Form.useForm();
   const [percent, setPercentage] = useState(initialValues.percent || 1.0);
   const [composition, setComposition] = useState(
     initialValues.composition || 1.0,
   );
-  console.log({ initialValues });
   const validate = () => {
     form
       .validateFields()
       .then((values) => {
         onOk({ ...initialValues, ...values, ...{ percent, composition } });
-        form.resetFields();
       })
       .catch(() => {
         console.log('logged');
       });
   };
   const onModalCancel = () => {
-    form.resetFields();
+    setCurrentObject({});
     onCancel();
   };
   return (
