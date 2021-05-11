@@ -39,7 +39,7 @@ ipcMain.on('items-fetch-message', async (event, arg) => {
     if (item.length > 0) {
       event.reply(
         'items-fetch-reply',
-        response.success('Items Found successfully', item),
+        response.success('Items Found successfully', { items: item }),
       );
     } else {
       const err = new Error('No Items Found');

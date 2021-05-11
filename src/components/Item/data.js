@@ -11,7 +11,7 @@ export const getColumns = (onEditAction) => [
   },
   {
     title: 'Item Name',
-    dataIndex: 'itemName',
+    dataIndex: 'productName',
     // filters: [
     //   {
     //     text: 'Joe',

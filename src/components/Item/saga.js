@@ -1,5 +1,10 @@
 import { put } from 'redux-saga/effects';
-import { getItemsFailed, getItemsSuccess } from './reducer';
+import {
+  getItemsFailed,
+  getItemsSuccess,
+  addItemsFailed,
+  addItemsSuccess,
+} from './reducer';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -32,10 +37,10 @@ function* itemsSaga(action) {
 function* itemsAddSaga(action) {
   try {
     const response = yield addItem(action.payload);
-    if (!response.error) yield put(getItemsSuccess(response));
-    else yield put(getItemsFailed(response));
+    if (!response.error) yield put(addItemsSuccess(response));
+    else yield put(addItemsFailed(response));
   } catch (error) {
-    yield put(getItemsFailed({ message: error.message }));
+    yield put(addItemsFailed({ message: error.message }));
   }
 }
 export { itemsSaga, itemsAddSaga };

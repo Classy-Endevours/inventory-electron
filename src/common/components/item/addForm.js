@@ -21,15 +21,21 @@ export function AddItemForm({
   const [composition, setComposition] = useState(
     initialValues.composition || 1.0,
   );
+  console.log({ initialValues });
   const validate = () => {
     form
       .validateFields()
       .then((values) => {
         onOk({ ...initialValues, ...values, ...{ percent, composition } });
+        form.resetFields();
       })
       .catch(() => {
         console.log('logged');
       });
+  };
+  const onModalCancel = () => {
+    form.resetFields();
+    onCancel();
   };
   return (
     <CustomModal
@@ -37,13 +43,13 @@ export function AddItemForm({
       centered
       visible={isOpen}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={onModalCancel}
       footer={[
         <NewContentButton
           shape="round"
           key="back"
           icon={<RollbackOutlined />}
-          onClick={onCancel}
+          onClick={onModalCancel}
         >
           Back
         </NewContentButton>,
@@ -77,16 +83,7 @@ export function AddItemForm({
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="composition"
-          label="Composition"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the composition!',
-            },
-          ]}
-        >
+        <Form.Item name="composition" label="Composition">
           <InputNumber
             style={{ width: '90%' }}
             autoComplete="disabled"
@@ -97,16 +94,7 @@ export function AddItemForm({
           />{' '}
           %
         </Form.Item>
-        <Form.Item
-          name="percent"
-          label="Percentage"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the percent!',
-            },
-          ]}
-        >
+        <Form.Item name="percent" label="Percentage">
           <InputNumber
             style={{ width: '90%' }}
             autoComplete="disabled"

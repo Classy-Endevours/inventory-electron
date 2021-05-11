@@ -22,9 +22,9 @@ const ItemSlicer = createSlice({
     }),
     getItemsSuccess: (state, action) => ({
       ...state,
-      items: action.payload.items ?? [],
-      recentItems: action.payload.recentItems ?? [],
-      mostOutItems: action.payload.mostOutItems ?? [],
+      items: action.payload.data.items ?? [],
+      recentItems: action.payload.data.recentItems ?? [],
+      mostOutItems: action.payload.data.mostOutItems ?? [],
       isLoading: false,
       isSuccess: true,
       isError: false,

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Row, Col, Divider, Space } from 'antd';
@@ -6,7 +7,7 @@ import {
   RowItemInfoCard,
   RowItemRecentCard,
 } from '../../common/components/regular/RowItemInfoCard';
-import { getItems } from './reducer';
+import { getItems, addItems } from './reducer';
 import {
   ColorerdTable,
   BorderedCard,
@@ -19,32 +20,45 @@ const { Content } = Layout;
 
 const Item = () => {
   const [addItemModal, setAddItemModal] = useState(false);
-  const { isLoading, items, recentItems, mostOutItems } = useSelector(
-    (state) => state.ItemsReducer,
-  );
+  const [mode, setMode] = useState('');
+  const [currentObject, setCurrentObject] = useState({});
+  const {
+    isLoading,
+    items,
+    recentItems,
+    mostOutItems,
+    isAddLoading,
+  } = useSelector((state) => state.ItemsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getItems());
   }, []);
-
   // if (isLoading) {
   //   return <Loader />;
   // }
+  const onOk = (data) => {
+    switch (mode) {
+      case 'new':
+        dispatch(addItems(data));
+        break;
+      case 'edit':
+        break;
 
+      default:
+        break;
+    }
+  };
   return (
     <Content>
       <AddItemForm
         title="Add New Item"
         isOpen={addItemModal}
-        onOk={() => setAddItemModal(!addItemModal)}
+        onOk={(data) => onOk(data)}
         onCancel={() => setAddItemModal(!addItemModal)}
-        initialValues={{
-          productName: 'Hellow',
-          composition: '80.00',
-          percent: '70.00',
-          hsnCode: 'kjha',
-        }}
+        mode={mode}
+        initialValues={currentObject}
+        loading={isAddLoading}
       />
 
       <Row justify="end">
@@ -55,7 +69,10 @@ const Item = () => {
           <NewContentButton
             shape="round"
             icon={<FolderAddOutlined />}
-            onClick={() => setAddItemModal(!addItemModal)}
+            onClick={() => {
+              setMode('new');
+              setAddItemModal(!addItemModal);
+            }}
           >
             Add Item
           </NewContentButton>
@@ -68,8 +85,11 @@ const Item = () => {
       <Row justify="space-around">
         <Col span={17}>
           <ColorerdTable
-            columns={getColumns((item, row) => {
-              console.log({ item, row });
+            columns={getColumns((item) => {
+              console.log(item);
+              setCurrentObject(item);
+              setMode('new');
+              setAddItemModal(true);
             })}
             dataSource={items}
             pagination={{ pageSize: 10 }}
