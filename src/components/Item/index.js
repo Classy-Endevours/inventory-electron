@@ -54,8 +54,8 @@ const columns = [
     // specify the condition of filtering result
     // here is that finding the name started with `value`
     onFilter: (value, record) => record.itemName.indexOf(value) === 0,
-    sorter: (a, b) => a.itemName - b.itemName,
-    sortDirections: ['descend'],
+    sorter: (a, b) => a.itemName.localeCompare(b.itemName),
+    // sortDirections: ['descend'],
     render: (itemName) => <ColoredRow>{itemName}</ColoredRow>,
   },
   {
@@ -127,6 +127,7 @@ const Item = () => {
             columns={columns}
             dataSource={items}
             pagination={{ pageSize: 10 }}
+            style={{ padding: 10 }}
           />
         </Col>
         <Col type="flex" align="top" justify="space-around" span={6}>
