@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Row, Col, Divider, Space } from 'antd';
 import { DownloadOutlined, FolderAddOutlined } from '@ant-design/icons';
@@ -10,88 +10,16 @@ import {
 import { getItems } from './reducer';
 import {
   ColorerdTable,
-  ColoredRow,
   BorderedCard,
   NewContentButton,
 } from '../../common/uielements/Collection.style';
+import { getColumns } from './data';
+import { AddItemForm } from '../../common/components/item/addForm';
 
 const { Content } = Layout;
 
-const columns = [
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    sorter: (a, b) => a.id - b.id,
-    // defaultSortOrder: 'descend',
-  },
-  {
-    title: 'Item Name',
-    dataIndex: 'itemName',
-    // filters: [
-    //   {
-    //     text: 'Joe',
-    //     value: 'Joe',
-    //   },
-    //   {
-    //     text: 'Jim',
-    //     value: 'Jim',
-    //   },
-    //   {
-    //     text: 'Submenu',
-    //     value: 'Submenu',
-    //     children: [
-    //       {
-    //         text: 'Green',
-    //         value: 'Green',
-    //       },
-    //       {
-    //         text: 'Black',
-    //         value: 'Black',
-    //       },
-    //     ],
-    //   },
-    // ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value, record) => record.itemName.indexOf(value) === 0,
-    sorter: (a, b) => a.itemName.localeCompare(b.itemName),
-    // sortDirections: ['descend'],
-    render: (itemName) => <ColoredRow>{itemName}</ColoredRow>,
-  },
-  {
-    title: 'Composition',
-    dataIndex: 'composition',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => a.composition - b.composition,
-  },
-  {
-    title: 'Percent',
-    dataIndex: 'percent',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => a.percent - b.percent,
-    render: (percent) => `${percent}%`,
-  },
-  {
-    title: 'HSN Code',
-    dataIndex: 'hsnCode',
-    // filters: [
-    //   {
-    //     text: 'London',
-    //     value: 'London',
-    //   },
-    //   {
-    //     text: 'New York',
-    //     value: 'New York',
-    //   },
-    // ],
-    filterMultiple: false,
-    onFilter: (value, record) => record.hsnCode.indexOf(value) === 0,
-    sorter: (a, b) => a.hsnCode.length - b.hsnCode.length,
-    sortDirections: ['descend', 'ascend'],
-  },
-];
-
 const Item = () => {
+  const [addItemModal, setAddItemModal] = useState(false);
   const { isLoading, items, recentItems, mostOutItems } = useSelector(
     (state) => state.ItemsReducer,
   );
@@ -107,12 +35,23 @@ const Item = () => {
 
   return (
     <Content>
+      <AddItemForm
+        title="Add New Item"
+        isOpen={addItemModal}
+        onOk={() => setAddItemModal(!addItemModal)}
+        onCancel={() => setAddItemModal(!addItemModal)}
+      />
+
       <Row justify="end">
         <Space>
           <NewContentButton shape="round" icon={<DownloadOutlined />}>
             Export Items
           </NewContentButton>
-          <NewContentButton shape="round" icon={<FolderAddOutlined />}>
+          <NewContentButton
+            shape="round"
+            icon={<FolderAddOutlined />}
+            onClick={() => setAddItemModal(!addItemModal)}
+          >
             Add Item
           </NewContentButton>
           <div />
@@ -124,7 +63,9 @@ const Item = () => {
       <Row justify="space-around">
         <Col span={17}>
           <ColorerdTable
-            columns={columns}
+            columns={getColumns((item, row) => {
+              console.log({ item, row });
+            })}
             dataSource={items}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}

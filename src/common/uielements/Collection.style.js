@@ -24,5 +24,11 @@ export const NewContentButton = styled(Button)`
   background-color: #174a84;
   height: 40px;
 `;
+export const AntiContentButton = styled(Button)`
+  border-radius: 8px;
+  color: #174a84;
+  background-color: #ffffff;
+  height: 40px;
+`;
 
 export default {};
