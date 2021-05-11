@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { CheckCircleOutlined, RollbackOutlined } from '@ant-design/icons';
 import { Form, Input, InputNumber } from 'antd';
 import { CustomModal } from '../../uielements/Modal.style';
@@ -17,12 +17,15 @@ export function AddItemForm({
   initialValues = {},
 }) {
   const [form] = Form.useForm();
+  const [percent, setPercentage] = useState(initialValues.percent || 1.0);
+  const [composition, setComposition] = useState(
+    initialValues.composition || 1.0,
+  );
   const validate = () => {
     form
       .validateFields()
       .then((values) => {
-        console.log(values);
-        onOk({ ...initialValues, ...values });
+        onOk({ ...initialValues, ...values, ...{ percent, composition } });
       })
       .catch(() => {
         console.log('logged');
@@ -88,6 +91,9 @@ export function AddItemForm({
             style={{ width: '90%' }}
             autoComplete="disabled"
             precision={2}
+            defaultValue={composition}
+            min={0}
+            onChange={(value) => setComposition(value)}
           />{' '}
           %
         </Form.Item>
@@ -97,7 +103,7 @@ export function AddItemForm({
           rules={[
             {
               required: true,
-              message: 'Please input the percentage!',
+              message: 'Please input the percent!',
             },
           ]}
         >
@@ -105,6 +111,9 @@ export function AddItemForm({
             style={{ width: '90%' }}
             autoComplete="disabled"
             precision={2}
+            min={0}
+            defaultValue={percent}
+            onChange={(value) => setPercentage(value)}
           />{' '}
           %
         </Form.Item>
