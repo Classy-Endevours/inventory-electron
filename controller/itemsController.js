@@ -27,9 +27,11 @@ ipcMain.on('items-create-message', async (event, arg) => {
 
 ipcMain.on('items-fetch-message', async (event, arg) => {
   try {
-    const options = {};
-    if (arg.where) options.where = arg.where;
-    if (arg.offset) {
+    const options = {
+      order: [['updatedAt', 'DESC']],
+    };
+    if (arg?.where) options.where = arg.where;
+    if (arg?.offset) {
       options.offset = arg.offset;
       options.limit = 15;
     }

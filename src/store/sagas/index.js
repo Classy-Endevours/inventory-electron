@@ -2,7 +2,7 @@ import { takeLatest } from 'redux-saga/effects';
 import { login } from '../../components/Login/reducer';
 import loginSaga from '../../components/Login/saga';
 
-import itemsSaga from '../../components/Item/saga';
+import { itemsSaga } from '../../components/Item/saga';
 import { getItems } from '../../components/Item/reducer';
 
 export default function* watcherSagas() {

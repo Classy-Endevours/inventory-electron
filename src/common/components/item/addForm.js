@@ -21,6 +21,7 @@ export function AddItemForm({
     form
       .validateFields()
       .then((values) => {
+        console.log(values);
         onOk({ ...initialValues, ...values });
       })
       .catch(() => {
@@ -62,7 +63,7 @@ export function AddItemForm({
         initialValues={initialValues}
       >
         <Form.Item
-          name="itemName"
+          name="productName"
           label="Item Name"
           rules={[
             {
@@ -91,7 +92,7 @@ export function AddItemForm({
           %
         </Form.Item>
         <Form.Item
-          name="percentage"
+          name="percent"
           label="Percentage"
           rules={[
             {
@@ -108,7 +109,7 @@ export function AddItemForm({
           %
         </Form.Item>
         <Form.Item
-          name="HSN Code"
+          name="hsnCode"
           label="HSN Code"
           rules={[
             {

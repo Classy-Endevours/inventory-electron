@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Row, Col, Divider, Space } from 'antd';
 import { DownloadOutlined, FolderAddOutlined } from '@ant-design/icons';
-import Loader from '../../common/components/regular/Loader';
 import {
   RowItemInfoCard,
   RowItemRecentCard,
@@ -29,9 +28,9 @@ const Item = () => {
     dispatch(getItems());
   }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <Content>
@@ -40,6 +39,12 @@ const Item = () => {
         isOpen={addItemModal}
         onOk={() => setAddItemModal(!addItemModal)}
         onCancel={() => setAddItemModal(!addItemModal)}
+        initialValues={{
+          productName: 'Hellow',
+          composition: '80.00',
+          percent: '70.00',
+          hsnCode: 'kjha',
+        }}
       />
 
       <Row justify="end">
@@ -69,6 +74,7 @@ const Item = () => {
             dataSource={items}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}
+            loading={isLoading}
           />
         </Col>
         <Col type="flex" align="top" justify="space-around" span={6}>
@@ -76,6 +82,7 @@ const Item = () => {
             title="Recent Inventory Out"
             extra={<span>More</span>}
             style={{ width: 300 }}
+            loading={isLoading}
           >
             {recentItems.map((item) => (
               <RowItemRecentCard key={item.id} item={item} />
@@ -86,6 +93,7 @@ const Item = () => {
             title="Top Inventory Out"
             extra={<span>More</span>}
             style={{ width: 300 }}
+            loading={isLoading}
           >
             {mostOutItems.map((item) => (
               <RowItemInfoCard key={item.id} item={item} />

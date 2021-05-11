@@ -9,6 +9,9 @@ const ItemSlicer = createSlice({
     isLoading: false,
     isSuccess: false,
     isError: false,
+    isAddLoading: false,
+    isAddSuccess: false,
+    isAddError: false,
   },
   reducers: {
     getItems: (state) => ({
@@ -19,9 +22,9 @@ const ItemSlicer = createSlice({
     }),
     getItemsSuccess: (state, action) => ({
       ...state,
-      items: action.payload.items,
-      recentItems: action.payload.recentItems,
-      mostOutItems: action.payload.mostOutItems,
+      items: action.payload.items ?? [],
+      recentItems: action.payload.recentItems ?? [],
+      mostOutItems: action.payload.mostOutItems ?? [],
       isLoading: false,
       isSuccess: true,
       isError: false,
@@ -32,9 +35,34 @@ const ItemSlicer = createSlice({
       isSuccess: false,
       isError: true,
     }),
+    addItems: (state) => ({
+      ...state,
+      isAddLoading: true,
+      isAddSuccess: false,
+      isAddError: false,
+    }),
+    addItemsSuccess: (state) => ({
+      ...state,
+      isAddLoading: false,
+      isAddSuccess: true,
+      isAddError: false,
+    }),
+    addItemsFailed: (state) => ({
+      ...state,
+      isAddLoading: false,
+      isAddSuccess: false,
+      isAddError: true,
+    }),
   },
 });
 
-export const { getItemsFailed, getItems, getItemsSuccess } = ItemSlicer.actions;
+export const {
+  getItemsFailed,
+  getItems,
+  getItemsSuccess,
+  addItems,
+  addItemsSuccess,
+  addItemsFailed,
+} = ItemSlicer.actions;
 
 export default ItemSlicer.reducer;
