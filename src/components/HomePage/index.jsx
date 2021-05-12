@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Vendors from '../Vendors';
 // import Dashboard from '../Dashboard';
 import {
   DashboardSider,
@@ -15,7 +15,7 @@ import {
 } from '../../common/uielements/Dasbord.styles';
 import { clear } from '../Login/reducer';
 
-export default function HomePage() {
+export default function HomePage({ MainComponent }) {
   const dispatch = useDispatch();
   const history = useHistory();
   return (
@@ -31,10 +31,24 @@ export default function HomePage() {
             defaultOpenKeys={['sub1']}
             theme="dark"
           >
-            <DashboardMenu.Item key="1">Dashboard</DashboardMenu.Item>
-            <DashboardMenu.Item key="2">Supplier</DashboardMenu.Item>
-            <DashboardMenu.Item key="3">Vendors</DashboardMenu.Item>
-            <DashboardMenu.Item key="4">Items</DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="1"
+              onClick={() => history.push('/Dashboard')}
+            >
+              Dashboard
+            </DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="2"
+              onClick={() => history.push('/Supplier')}
+            >
+              Supplier
+            </DashboardMenu.Item>
+            <DashboardMenu.Item key="3" onClick={() => history.push('/Vendor')}>
+              Vendors
+            </DashboardMenu.Item>
+            <DashboardMenu.Item key="4" onClick={() => history.push('/Items')}>
+              Items
+            </DashboardMenu.Item>
             <DashboardMenu.Item key="5">Inventory</DashboardMenu.Item>
             <DashboardMenu.Item key="6">Challan</DashboardMenu.Item>
             <DashboardMenu.Item key="7">Settings</DashboardMenu.Item>
@@ -52,7 +66,7 @@ export default function HomePage() {
         </DashboardSider>
         <DashboardChildLayout>
           <DashboardContentLayout>
-            <Vendors />
+            <MainComponent />
           </DashboardContentLayout>
           {/* <DashboardFooter>Rajesh Exports &#169;2021</DashboardFooter> */}
         </DashboardChildLayout>

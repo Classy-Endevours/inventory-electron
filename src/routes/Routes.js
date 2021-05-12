@@ -9,6 +9,10 @@ import {
 } from 'react-router-dom';
 import Login from '../components/Login';
 import HomePage from '../components/HomePage';
+import Dashboard from '../components/Dashboard';
+import Item from '../components/Item';
+import Vendors from '../components/Vendors';
+import Supplier from '../components/Supplier';
 
 function Routes() {
   // let location = useLocation();
@@ -19,7 +23,16 @@ function Routes() {
           <Login />
         </PublicRoute>
         <PrivateRoute path="/Dashboard">
-          <HomePage />
+          <HomePage MainComponent={Dashboard} />
+        </PrivateRoute>
+        <PrivateRoute path="/Items">
+          <HomePage MainComponent={Item} />
+        </PrivateRoute>
+        <PrivateRoute path="/Vendor">
+          <HomePage MainComponent={Vendors} />
+        </PrivateRoute>
+        <PrivateRoute path="/Supplier">
+          <HomePage MainComponent={Supplier} />
         </PrivateRoute>
       </Switch>
     </Router>
