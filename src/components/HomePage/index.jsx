@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Supplier from '../Supplier';
+import Vendors from '../Vendors';
 // import Dashboard from '../Dashboard';
 import {
   DashboardSider,
@@ -52,7 +52,7 @@ export default function HomePage() {
         </DashboardSider>
         <DashboardChildLayout>
           <DashboardContentLayout>
-            <Supplier />
+            <Vendors />
           </DashboardContentLayout>
           {/* <DashboardFooter>Rajesh Exports &#169;2021</DashboardFooter> */}
         </DashboardChildLayout>
