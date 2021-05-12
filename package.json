@@ -45,7 +45,15 @@
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on tcp:3000 && electron .",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "migration:create": "sequelize-cli migration:create --name",
+    "migration:up": "sequelize db:migrate",
+    "migration:down": "sequelize db:migrate:undo",
+    "migration:down:all": "sequelize db:migrate:undo:all",
+    "seeder:create": "sequelize seed:generate --name",
+    "seeder:up": "sequelize db:seed:all",
+    "seeder:down": "sequelize db:seed:undo",
+    "seeder:down:all": "sequelize db:seed:undo:all"
   },
   "build": {
     "extends": null,
