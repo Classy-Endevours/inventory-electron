@@ -13,7 +13,7 @@ module.exports = {
       },
       composition: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
       },
       percent: {
         allowNull: false,

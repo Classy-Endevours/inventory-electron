@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       composition: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
       },
       percent: {
         allowNull: false,

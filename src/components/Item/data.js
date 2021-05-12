@@ -1,17 +1,18 @@
 import { Col, Row } from 'antd';
 import { EditTwoTone } from '@ant-design/icons';
+import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
 export const getColumns = (onEditAction) => [
   {
-    title: 'Id',
-    dataIndex: 'id',
-    sorter: (a, b) => a.id - b.id,
+    title: 'Sr. No.',
+    key: 'index',
+    render: (value, item, index) => index + 1,
     // defaultSortOrder: 'descend',
   },
   {
     title: 'Item Name',
-    dataIndex: 'itemName',
+    dataIndex: 'productName',
     // filters: [
     //   {
     //     text: 'Joe',
@@ -46,13 +47,11 @@ export const getColumns = (onEditAction) => [
   {
     title: 'Composition',
     dataIndex: 'composition',
-    defaultSortOrder: 'descend',
     sorter: (a, b) => a.composition - b.composition,
   },
   {
     title: 'Percent',
     dataIndex: 'percent',
-    defaultSortOrder: 'descend',
     sorter: (a, b) => a.percent - b.percent,
     render: (percent) => `${percent}%`,
   },
@@ -73,6 +72,14 @@ export const getColumns = (onEditAction) => [
     onFilter: (value, record) => record.hsnCode.indexOf(value) === 0,
     sorter: (a, b) => a.hsnCode.length - b.hsnCode.length,
     sortDirections: ['descend', 'ascend'],
+  },
+  {
+    title: 'Date',
+    dataIndex: 'updatedAt',
+    sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
+    render: (text) => {
+      return moment(text).format('MM/DD/YY');
+    },
   },
   {
     title: 'Action',

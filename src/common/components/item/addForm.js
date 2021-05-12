@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { CheckCircleOutlined, RollbackOutlined } from '@ant-design/icons';
 import { Form, Input, InputNumber } from 'antd';
 import { CustomModal } from '../../uielements/Modal.style';
@@ -15,17 +15,26 @@ export function AddItemForm({
   onCancel,
   loading,
   initialValues = {},
+  setCurrentObject,
 }) {
   const [form] = Form.useForm();
+  const [percent, setPercentage] = useState(initialValues.percent || 1.0);
+  const [composition, setComposition] = useState(
+    initialValues.composition || 1.0,
+  );
   const validate = () => {
     form
       .validateFields()
       .then((values) => {
-        onOk({ ...initialValues, ...values });
+        onOk({ ...initialValues, ...values, ...{ percent, composition } });
       })
       .catch(() => {
         console.log('logged');
       });
+  };
+  const onModalCancel = () => {
+    setCurrentObject({});
+    onCancel();
   };
   return (
     <CustomModal
@@ -33,13 +42,13 @@ export function AddItemForm({
       centered
       visible={isOpen}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={onModalCancel}
       footer={[
         <NewContentButton
           shape="round"
           key="back"
           icon={<RollbackOutlined />}
-          onClick={onCancel}
+          onClick={onModalCancel}
         >
           Back
         </NewContentButton>,
@@ -62,7 +71,7 @@ export function AddItemForm({
         initialValues={initialValues}
       >
         <Form.Item
-          name="itemName"
+          name="productName"
           label="Item Name"
           rules={[
             {
@@ -73,42 +82,30 @@ export function AddItemForm({
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="composition"
-          label="Composition"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the composition!',
-            },
-          ]}
-        >
+        <Form.Item name="composition" label="Composition">
           <InputNumber
             style={{ width: '90%' }}
             autoComplete="disabled"
             precision={2}
+            defaultValue={composition}
+            min={0}
+            onChange={(value) => setComposition(value)}
           />{' '}
           %
         </Form.Item>
-        <Form.Item
-          name="percentage"
-          label="Percentage"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the percentage!',
-            },
-          ]}
-        >
+        <Form.Item name="percent" label="Percentage">
           <InputNumber
             style={{ width: '90%' }}
             autoComplete="disabled"
             precision={2}
+            min={0}
+            defaultValue={percent}
+            onChange={(value) => setPercentage(value)}
           />{' '}
           %
         </Form.Item>
         <Form.Item
-          name="HSN Code"
+          name="hsnCode"
           label="HSN Code"
           rules={[
             {

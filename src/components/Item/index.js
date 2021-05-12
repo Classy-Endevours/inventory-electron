@@ -1,13 +1,13 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Row, Col, Divider, Space } from 'antd';
 import { DownloadOutlined, FolderAddOutlined } from '@ant-design/icons';
-import Loader from '../../common/components/regular/Loader';
 import {
   RowItemInfoCard,
   RowItemRecentCard,
 } from '../../common/components/regular/RowItemInfoCard';
-import { getItems } from './reducer';
+import { getItems, addItems, editItems } from './reducer';
 import {
   ColorerdTable,
   BorderedCard,
@@ -20,27 +20,49 @@ const { Content } = Layout;
 
 const Item = () => {
   const [addItemModal, setAddItemModal] = useState(false);
-  const { isLoading, items, recentItems, mostOutItems } = useSelector(
-    (state) => state.ItemsReducer,
-  );
+  const [mode, setMode] = useState('');
+  const [currentObject, setCurrentObject] = useState({});
+  const {
+    isLoading,
+    items,
+    recentItems,
+    mostOutItems,
+    isAddLoading,
+    isEditLoading,
+  } = useSelector((state) => state.ItemsReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getItems());
   }, []);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+  const onOk = (data) => {
+    switch (mode) {
+      case 'new':
+        dispatch(addItems(data));
+        break;
+      case 'edit':
+        dispatch(editItems(data));
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <Content>
-      <AddItemForm
-        title="Add New Item"
-        isOpen={addItemModal}
-        onOk={() => setAddItemModal(!addItemModal)}
-        onCancel={() => setAddItemModal(!addItemModal)}
-      />
+      {addItemModal && (
+        <AddItemForm
+          title="Add New Item"
+          isOpen={addItemModal}
+          onOk={(data) => onOk(data)}
+          onCancel={() => setAddItemModal(!addItemModal)}
+          initialValues={currentObject}
+          setCurrentObject={setCurrentObject}
+          loading={mode === 'new' ? isAddLoading : isEditLoading}
+        />
+      )}
 
       <Row justify="end">
         <Space>
@@ -50,7 +72,10 @@ const Item = () => {
           <NewContentButton
             shape="round"
             icon={<FolderAddOutlined />}
-            onClick={() => setAddItemModal(!addItemModal)}
+            onClick={() => {
+              setMode('new');
+              setAddItemModal(!addItemModal);
+            }}
           >
             Add Item
           </NewContentButton>
@@ -63,12 +88,15 @@ const Item = () => {
       <Row justify="space-around">
         <Col span={17}>
           <ColorerdTable
-            columns={getColumns((item, row) => {
-              console.log({ item, row });
+            columns={getColumns((item) => {
+              setCurrentObject(item);
+              setMode('edit');
+              setAddItemModal(true);
             })}
             dataSource={items}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}
+            loading={isLoading}
           />
         </Col>
         <Col type="flex" align="top" justify="space-around" span={6}>
@@ -76,6 +104,7 @@ const Item = () => {
             title="Recent Inventory Out"
             extra={<span>More</span>}
             style={{ width: 300 }}
+            loading={isLoading}
           >
             {recentItems.map((item) => (
               <RowItemRecentCard key={item.id} item={item} />
@@ -86,6 +115,7 @@ const Item = () => {
             title="Top Inventory Out"
             extra={<span>More</span>}
             style={{ width: 300 }}
+            loading={isLoading}
           >
             {mostOutItems.map((item) => (
               <RowItemInfoCard key={item.id} item={item} />
