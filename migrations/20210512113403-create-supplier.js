@@ -2,33 +2,21 @@ const Sequelize = require('sequelize');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable('items', {
+    await queryInterface.createTable('suppliers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      productName: {
-        allowNull: false,
+      name: {
         type: Sequelize.STRING,
       },
-      composition: {
-        allowNull: false,
-        type: Sequelize.FLOAT,
-      },
-      percent: {
-        allowNull: false,
-        type: Sequelize.FLOAT,
-      },
-      hsnCode: {
-        allowNull: false,
+      deliveryAddress: {
         type: Sequelize.STRING,
       },
-      isDeleted: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      gstNo: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +29,6 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('items');
+    await queryInterface.dropTable('suppliers');
   },
 };

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const Sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
+const Umzug = require('umzug');
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
@@ -40,6 +41,43 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+const migrations = new Umzug({
+  migrations: {
+    // indicates the folder containing the migration .js files
+    path: path.join(__dirname, '../migrations'),
+    // inject sequelize's QueryInterface in the migrations
+    params: [sequelize.getQueryInterface()],
+  },
+  storage: 'sequelize',
+  storageOptions: {
+    sequelize, // here should be a sequelize instance, not the Sequelize module
+  },
+  logger: console,
+});
+const seeders = new Umzug({
+  migrations: {
+    // indicates the folder containing the migration .js files
+    path: path.join(__dirname, '../seeders'),
+    // inject sequelize's QueryInterface in the migrations
+    params: [sequelize.getQueryInterface()],
+  },
+  storage: 'sequelize',
+  storageOptions: {
+    sequelize, // here should be a sequelize instance, not the Sequelize module
+  },
+  logger: console,
+});
+(async () => {
+  // Checks migrations and run them if they are not already applied. To keep
+  // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
+  // will be automatically created (if it doesn't exist already) and parsed.
+  try {
+    await migrations.up();
+    await seeders.up();
+  } catch (error) {
+    console.log(error);
+  }
+})();
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
