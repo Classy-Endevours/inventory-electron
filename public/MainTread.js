@@ -22,3 +22,13 @@ isDev
 isDev
   ? require('../controller/itemsController')
   : require(`${path.join(__dirname, '', '../controller/itemsController')}`);
+
+// include supplier Controller
+isDev
+  ? require('../controller/supplierController')
+  : require(`${path.join(__dirname, '', '../controller/supplierController')}`);
+
+// include vendor Controller
+isDev
+  ? require('../controller/vendorController')
+  : require(`${path.join(__dirname, '', '../controller/vendorController')}`);
