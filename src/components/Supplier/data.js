@@ -37,7 +37,7 @@ export const getColumns = (onEditAction) => [
     dataIndex: 'updatedAt',
     sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
     render: (text) => {
-      return moment(text).format('MM/DD/YY');
+      return moment(text).format('MMM Do YY');
     },
   },
   {

@@ -11,32 +11,8 @@ export const getColumns = (onEditAction) => [
     // defaultSortOrder: 'descend',
   },
   {
-    title: 'Item Name',
-    dataIndex: 'productName',
-    // filters: [
-    //   {
-    //     text: 'Joe',
-    //     value: 'Joe',
-    //   },
-    //   {
-    //     text: 'Jim',
-    //     value: 'Jim',
-    //   },
-    //   {
-    //     text: 'Submenu',
-    //     value: 'Submenu',
-    //     children: [
-    //       {
-    //         text: 'Green',
-    //         value: 'Green',
-    //       },
-    //       {
-    //         text: 'Black',
-    //         value: 'Black',
-    //       },
-    //     ],
-    //   },
-    // ],
+    title: 'Vendor Name',
+    dataIndex: 'name',
     // specify the condition of filtering result
     // here is that finding the name started with `value`
     onFilter: (value, record) => record.itemName.indexOf(value) === 0,
@@ -45,50 +21,33 @@ export const getColumns = (onEditAction) => [
     render: (itemName) => <ColoredRow>{itemName}</ColoredRow>,
   },
   {
-    title: 'Composition',
-    dataIndex: 'composition',
+    title: 'Delivery Address',
+    dataIndex: 'deliveryAddress',
     sorter: (a, b) => a.composition - b.composition,
   },
   {
-    title: 'Percent',
-    dataIndex: 'percent',
-    sorter: (a, b) => a.percent - b.percent,
-    render: (percent) => `${percent}%`,
-  },
-  {
-    title: 'HSN Code',
-    dataIndex: 'hsnCode',
-    // filters: [
-    //   {
-    //     text: 'London',
-    //     value: 'London',
-    //   },
-    //   {
-    //     text: 'New York',
-    //     value: 'New York',
-    //   },
-    // ],
+    title: 'GST No.',
+    dataIndex: 'gstNo',
     filterMultiple: false,
     onFilter: (value, record) => record.hsnCode.indexOf(value) === 0,
     sorter: (a, b) => a.hsnCode.length - b.hsnCode.length,
-    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Date',
     dataIndex: 'updatedAt',
     sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
     render: (text) => {
-      return moment(text).format('MM/DD/YY');
+      return moment(text).format('MMM Do YY');
     },
   },
   {
     title: 'Action',
     dataIndex: '',
     key: 'x',
-    render: (itemName, row) => (
+    render: (supplier, row) => (
       <Row>
         <Col>
-          <EditTwoTone onClick={() => onEditAction(itemName, row)} />
+          <EditTwoTone onClick={() => onEditAction(supplier, row)} />
         </Col>
       </Row>
     ),

@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const ItemSlicer = createSlice({
-  name: 'item',
+const VendorSlicer = createSlice({
+  name: 'vendor',
   initialState: {
-    items: [],
-    recentItems: [],
-    mostOutItems: [],
+    vendor: [],
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -17,58 +15,56 @@ const ItemSlicer = createSlice({
     isEditError: false,
   },
   reducers: {
-    getItems: (state) => ({
+    getVendor: (state) => ({
       ...state,
       isLoading: true,
       isSuccess: false,
       isError: false,
     }),
-    getItemsSuccess: (state, action) => ({
+    getVendorSuccess: (state, action) => ({
       ...state,
-      items: action.payload.data.items ?? [],
-      recentItems: action.payload.data.recentItems ?? [],
-      mostOutItems: action.payload.data.mostOutItems ?? [],
+      vendor: action.payload.data.vendor ?? [],
       isLoading: false,
       isSuccess: true,
       isError: false,
     }),
-    getItemsFailed: (state) => ({
+    getVendorFailed: (state) => ({
       ...state,
       isLoading: false,
       isSuccess: false,
       isError: true,
     }),
-    addItems: (state) => ({
+    addVendor: (state) => ({
       ...state,
       isAddLoading: true,
       isAddSuccess: false,
       isAddError: false,
     }),
-    addItemsSuccess: (state) => ({
+    addVendorSuccess: (state) => ({
       ...state,
       isAddLoading: false,
       isAddSuccess: true,
       isAddError: false,
     }),
-    addItemsFailed: (state) => ({
+    addVendorFailed: (state) => ({
       ...state,
       isAddLoading: false,
       isAddSuccess: false,
       isAddError: true,
     }),
-    editItems: (state) => ({
+    editVendor: (state) => ({
       ...state,
       isEditLoading: true,
       isEditSuccess: false,
       isEditError: false,
     }),
-    editItemsSuccess: (state) => ({
+    editVendorSuccess: (state) => ({
       ...state,
       isEditLoading: false,
       isEditSuccess: true,
       isEditError: false,
     }),
-    editItemsFailed: (state) => ({
+    editVendorFailed: (state) => ({
       ...state,
       isEditLoading: false,
       isEditSuccess: false,
@@ -78,15 +74,15 @@ const ItemSlicer = createSlice({
 });
 
 export const {
-  getItemsFailed,
-  getItems,
-  getItemsSuccess,
-  addItems,
-  addItemsSuccess,
-  addItemsFailed,
-  editItems,
-  editItemsSuccess,
-  editItemsFailed,
-} = ItemSlicer.actions;
+  getVendorFailed,
+  getVendor,
+  getVendorSuccess,
+  addVendor,
+  addVendorSuccess,
+  addVendorFailed,
+  editVendor,
+  editVendorSuccess,
+  editVendorFailed,
+} = VendorSlicer.actions;
 
-export default ItemSlicer.reducer;
+export default VendorSlicer.reducer;
