@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Layout, Row, Col, Divider, Space } from 'antd';
 import { DownloadOutlined, FolderAddOutlined } from '@ant-design/icons';
-import { getItems, addItems, editItems } from './reducer';
+import { getVendor, addVendor, editVendor } from './reducer';
 import {
   ColorerdTable,
   NewContentButton,
@@ -17,24 +17,21 @@ const Vendor = () => {
   const [addVendorModal, setVendorModal] = useState(false);
   const [mode, setMode] = useState('');
   const [currentObject, setCurrentObject] = useState({});
-  const { isLoading, items, isAddLoading, isEditLoading } = useSelector(
-    (state) => state.ItemsReducer,
+  const { isLoading, vendor, isAddLoading, isEditLoading } = useSelector(
+    (state) => state.VendorReducer,
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getItems());
+    dispatch(getVendor());
   }, []);
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
   const onOk = (data) => {
     switch (mode) {
       case 'new':
-        dispatch(addItems(data));
+        dispatch(addVendor(data));
         break;
       case 'edit':
-        dispatch(editItems(data));
+        dispatch(editVendor(data));
         break;
       default:
         break;
@@ -78,12 +75,12 @@ const Vendor = () => {
       <Row justify="space-around">
         <Col span={24}>
           <ColorerdTable
-            columns={getColumns((vendor) => {
-              setCurrentObject(vendor);
+            columns={getColumns((row) => {
+              setCurrentObject(row);
               setMode('edit');
               setVendorModal(true);
             })}
-            dataSource={items}
+            dataSource={vendor}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}
             loading={isLoading}
