@@ -20,27 +20,6 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config);
 }
-
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-    );
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes,
-    );
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
 const migrations = new Umzug({
   migrations: {
     // indicates the folder containing the migration .js files
@@ -67,6 +46,7 @@ const seeders = new Umzug({
   },
   logger: console,
 });
+
 (async () => {
   // Checks migrations and run them if they are not already applied. To keep
   // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
@@ -78,6 +58,26 @@ const seeders = new Umzug({
     console.log(error);
   }
 })();
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+    );
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes,
+    );
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

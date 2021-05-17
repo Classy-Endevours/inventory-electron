@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   inventoryIn.init(
     {
       rate: DataTypes.FLOAT,
-      hour: DataTypes.FLOAT,
+      quantity: DataTypes.FLOAT,
     },
     {
       sequelize,

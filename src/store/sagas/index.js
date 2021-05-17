@@ -17,6 +17,11 @@ import {
   vendorsAddSaga,
   vendorsUpdateSaga,
 } from '../../components/Vendors/saga';
+import {
+  inventoryInSaga,
+  inventoryInAddSaga,
+  inventoryInUpdateSaga,
+} from '../../components/inventoryIn/saga';
 import { getItems, addItems, editItems } from '../../components/Item/reducer';
 import {
   getSupplier,
@@ -28,6 +33,11 @@ import {
   addVendor,
   editVendor,
 } from '../../components/Vendors/reducer';
+import {
+  getInventoryIns,
+  addInventoryIns,
+  editInventoryIns,
+} from '../../components/inventoryIn/reducer';
 
 export default function* watcherSagas() {
   yield takeLatest(login.type, loginSaga);
@@ -40,4 +50,7 @@ export default function* watcherSagas() {
   yield takeLatest(getVendor.type, vendorsSaga);
   yield takeLatest(addVendor.type, vendorsAddSaga);
   yield takeLatest(editVendor.type, vendorsUpdateSaga);
+  yield takeLatest(getInventoryIns.type, inventoryInSaga);
+  yield takeLatest(addInventoryIns.type, inventoryInAddSaga);
+  yield takeLatest(editInventoryIns.type, inventoryInUpdateSaga);
 }

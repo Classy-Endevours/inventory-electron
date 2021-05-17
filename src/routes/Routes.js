@@ -13,6 +13,7 @@ import Dashboard from '../components/Dashboard';
 import Item from '../components/Item';
 import Vendors from '../components/Vendors';
 import Supplier from '../components/Supplier';
+import InventoryIn from '../components/inventoryIn';
 
 function Routes() {
   // let location = useLocation();
@@ -33,6 +34,9 @@ function Routes() {
         </PrivateRoute>
         <PrivateRoute path="/Supplier">
           <HomePage MainComponent={Supplier} />
+        </PrivateRoute>
+        <PrivateRoute path="/InventoryIn">
+          <HomePage MainComponent={InventoryIn} />
         </PrivateRoute>
       </Switch>
     </Router>
