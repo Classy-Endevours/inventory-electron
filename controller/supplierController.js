@@ -14,10 +14,10 @@ ipcMain.on('supplier-create-message', async (event, arg) => {
     if (item !== null) {
       event.reply(
         'supplier-create-reply',
-        response.success('Item Saved successfully', item),
+        response.success('Supplier Saved successfully', item),
       );
     } else {
-      const err = new Error('Item saving failed');
+      const err = new Error('Supplier saving failed');
       throw err;
     }
   } catch (error) {
@@ -39,7 +39,7 @@ ipcMain.on('supplier-fetch-message', async (event, arg) => {
     if (item.length > 0) {
       event.reply(
         'supplier-fetch-reply',
-        response.success('supplier Found successfully', { supplier: item }),
+        response.success('Supplier Found successfully', { supplier: item }),
       );
     } else {
       const err = new Error('No supplier Found');
@@ -59,7 +59,7 @@ ipcMain.on('supplier-update-message', async (event, arg) => {
     if (item.length > 0) {
       event.reply(
         'supplier-update-reply',
-        response.success('supplier Updated successfully', item),
+        response.success('Supplier Updated successfully', item),
       );
     } else {
       const err = new Error('No supplier Updated');

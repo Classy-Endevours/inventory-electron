@@ -2,37 +2,37 @@
 import { put } from 'redux-saga/effects';
 import { notification } from 'antd';
 import {
-  getItemsFailed,
-  getItemsSuccess,
-  addItemsFailed,
-  addItemsSuccess,
-  editItemsFailed,
-  editItemsSuccess,
-  getItems,
+  getSupplierFailed,
+  getSupplierSuccess,
+  addSupplierFailed,
+  addSupplierSuccess,
+  editSupplierFailed,
+  editSupplierSuccess,
+  getSupplier,
 } from './reducer';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
-function getItemsDb(payload) {
+function getSupplierDb(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('items-fetch-reply', (_, arg) => {
+    ipcRenderer.once('supplier-fetch-reply', (_, arg) => {
       resolve(arg);
     });
-    ipcRenderer.send('items-fetch-message', payload);
+    ipcRenderer.send('supplier-fetch-message', payload);
   });
 }
-function addItem(payload) {
+function addSupplier(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('items-create-reply', (_, arg) => {
+    ipcRenderer.once('supplier-create-reply', (_, arg) => {
       resolve(arg);
     });
-    ipcRenderer.send('items-create-message', payload);
+    ipcRenderer.send('supplier-create-message', payload);
   });
 }
-function updateItem(payload) {
+function updateSupplier(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('items-update-reply', (_, arg) => {
+    ipcRenderer.once('supplier-update-reply', (_, arg) => {
       resolve(arg);
     });
     const arg = {
@@ -44,32 +44,32 @@ function updateItem(payload) {
     delete payload.updatedAt;
     delete payload.createdAt;
     arg.values = { ...payload };
-    ipcRenderer.send('items-update-message', arg);
+    ipcRenderer.send('supplier-update-message', arg);
   });
 }
 
-function* itemsSaga(action) {
+function* supplierSaga(action) {
   try {
-    const response = yield getItemsDb(action.payload);
-    if (!response.error) yield put(getItemsSuccess(response));
-    else yield put(getItemsFailed(response));
+    const response = yield getSupplierDb(action.payload);
+    if (!response.error) yield put(getSupplierSuccess(response));
+    else yield put(getSupplierFailed(response));
   } catch (error) {
-    yield put(getItemsFailed({ message: error.message }));
+    yield put(getSupplierFailed({ message: error.message }));
   }
 }
-function* itemsAddSaga(action) {
+function* supplierAddSaga(action) {
   try {
-    const response = yield addItem(action.payload);
+    const response = yield addSupplier(action.payload);
     if (!response.error) {
-      yield put(addItemsSuccess(response));
-      yield put(getItems());
+      yield put(addSupplierSuccess(response));
+      yield put(getSupplier());
       notification.success({
         message: 'Success',
         description: response.message,
         duration: 2,
       });
     } else {
-      yield put(addItemsFailed(response));
+      yield put(addSupplierFailed(response));
       notification.error({
         message: 'Error',
         description: response.message,
@@ -77,7 +77,7 @@ function* itemsAddSaga(action) {
       });
     }
   } catch (error) {
-    yield put(addItemsFailed({ message: error.message }));
+    yield put(addSupplierFailed({ message: error.message }));
     notification.error({
       message: 'Error',
       description: error.message,
@@ -85,19 +85,19 @@ function* itemsAddSaga(action) {
     });
   }
 }
-function* itemsUpdateSaga(action) {
+function* supplierUpdateSaga(action) {
   try {
-    const response = yield updateItem(action.payload);
+    const response = yield updateSupplier(action.payload);
     if (!response.error) {
-      yield put(editItemsSuccess(response));
-      yield put(getItems());
+      yield put(editSupplierSuccess(response));
+      yield put(getSupplier());
       notification.success({
         message: 'Success',
         description: response.message,
         duration: 2,
       });
     } else {
-      yield put(editItemsFailed(response));
+      yield put(editSupplierFailed(response));
       notification.error({
         message: 'Error',
         description: response.message,
@@ -105,7 +105,7 @@ function* itemsUpdateSaga(action) {
       });
     }
   } catch (error) {
-    yield put(editItemsFailed({ message: error.message }));
+    yield put(editSupplierFailed({ message: error.message }));
     notification.error({
       message: 'Error',
       description: error.message,
@@ -113,4 +113,4 @@ function* itemsUpdateSaga(action) {
     });
   }
 }
-export { itemsSaga, itemsAddSaga, itemsUpdateSaga };
+export { supplierSaga, supplierAddSaga, supplierUpdateSaga };
