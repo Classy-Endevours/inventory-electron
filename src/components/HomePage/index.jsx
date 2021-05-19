@@ -51,7 +51,12 @@ export default function HomePage({ MainComponent }) {
             </DashboardMenu.Item>
             <DashboardMenu.Item key="5">Inventory</DashboardMenu.Item>
             <DashboardMenu.Item key="6">Challan</DashboardMenu.Item>
-            <DashboardMenu.Item key="7">Settings</DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="7"
+              onClick={() => history.push('/Settings')}
+            >
+              Settings
+            </DashboardMenu.Item>
             <DashboardMenu.Item
               key="8"
               onClick={async () => {
