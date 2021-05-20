@@ -14,6 +14,7 @@ import Item from '../components/Item';
 import Vendors from '../components/Vendors';
 import Supplier from '../components/Supplier';
 import InventoryIn from '../components/inventoryIn';
+import Setting from '../components/Settings';
 
 function Routes() {
   // let location = useLocation();
@@ -37,6 +38,9 @@ function Routes() {
         </PrivateRoute>
         <PrivateRoute path="/InventoryIn">
           <HomePage MainComponent={InventoryIn} />
+        </PrivateRoute>
+        <PrivateRoute path="/Settings">
+          <HomePage MainComponent={Setting} />
         </PrivateRoute>
       </Switch>
     </Router>

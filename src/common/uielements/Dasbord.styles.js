@@ -30,6 +30,13 @@ export const DashboardContentLayout = styled(Layout)`
   padding: 20px;
 `;
 
+export const DashboardFixedLayout = styled(Layout)`
+  background: #ffffff;
+  height: 100%;
+  overflow: auto;
+  padding: 20px;
+`;
+
 export const DashboardFooter = styled(Footer)`
   height: 30px;
   padding: 0;
