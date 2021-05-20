@@ -32,3 +32,12 @@ isDev
 isDev
   ? require('../controller/vendorController')
   : require(`${path.join(__dirname, '', '../controller/vendorController')}`);
+
+// include inventory in Controller
+isDev
+  ? require('../controller/inventoryInController')
+  : require(`${path.join(
+      __dirname,
+      '',
+      '../controller/inventoryInController',
+    )}`);

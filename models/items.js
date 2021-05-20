@@ -7,8 +7,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ inventoryIn }) {
       // define association here
+      this.hasMany(inventoryIn, {
+        foreignKey: 'itemId',
+      });
     }
   }
   items.init(
@@ -33,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+      },
+      availableQuantity: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
       },
     },
     {

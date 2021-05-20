@@ -49,8 +49,14 @@ export default function HomePage({ MainComponent }) {
             <DashboardMenu.Item key="4" onClick={() => history.push('/Items')}>
               Items
             </DashboardMenu.Item>
-            <DashboardMenu.Item key="5">Inventory</DashboardMenu.Item>
-            <DashboardMenu.Item key="6">Challan</DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="5"
+              onClick={() => history.push('/InventoryIn')}
+            >
+              Inventory In
+            </DashboardMenu.Item>
+            <DashboardMenu.Item key="6">Inventory Out</DashboardMenu.Item>
+            <DashboardMenu.Item key="7">Challan</DashboardMenu.Item>
             <DashboardMenu.Item
               key="7"
               onClick={() => history.push('/Settings')}
@@ -58,7 +64,7 @@ export default function HomePage({ MainComponent }) {
               Settings
             </DashboardMenu.Item>
             <DashboardMenu.Item
-              key="8"
+              key="9"
               onClick={async () => {
                 dispatch(clear());
                 await localStorage.setItem('login', false);

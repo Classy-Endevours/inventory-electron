@@ -13,6 +13,7 @@ import Dashboard from '../components/Dashboard';
 import Item from '../components/Item';
 import Vendors from '../components/Vendors';
 import Supplier from '../components/Supplier';
+import InventoryIn from '../components/inventoryIn';
 import Setting from '../components/Settings';
 
 function Routes() {
@@ -34,6 +35,9 @@ function Routes() {
         </PrivateRoute>
         <PrivateRoute path="/Supplier">
           <HomePage MainComponent={Supplier} />
+        </PrivateRoute>
+        <PrivateRoute path="/InventoryIn">
+          <HomePage MainComponent={InventoryIn} />
         </PrivateRoute>
         <PrivateRoute path="/Settings">
           <HomePage MainComponent={Setting} />
