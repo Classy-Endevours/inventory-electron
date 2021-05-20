@@ -42,7 +42,11 @@ const helloWorldSlice = createSlice({
   },
 });
 
-export const { login, loginSuccess, loginFail, clear } =
-  helloWorldSlice.actions;
+export const {
+  login,
+  loginSuccess,
+  loginFail,
+  clear,
+} = helloWorldSlice.actions;
 
 export default helloWorldSlice.reducer;
