@@ -22,6 +22,11 @@ import {
   inventoryInAddSaga,
   inventoryInUpdateSaga,
 } from '../../components/inventoryIn/saga';
+import {
+  inventoryOutSaga,
+  inventoryOutAddSaga,
+  inventoryOutUpdateSaga,
+} from '../../components/inventoryOut/saga';
 import { getItems, addItems, editItems } from '../../components/Item/reducer';
 import {
   getSupplier,
@@ -38,6 +43,11 @@ import {
   addInventoryIns,
   editInventoryIns,
 } from '../../components/inventoryIn/reducer';
+import {
+  getInventoryOuts,
+  addInventoryOuts,
+  editInventoryOuts,
+} from '../../components/inventoryOut/reducer';
 
 export default function* watcherSagas() {
   yield takeLatest(login.type, loginSaga);
@@ -53,4 +63,7 @@ export default function* watcherSagas() {
   yield takeLatest(getInventoryIns.type, inventoryInSaga);
   yield takeLatest(addInventoryIns.type, inventoryInAddSaga);
   yield takeLatest(editInventoryIns.type, inventoryInUpdateSaga);
+  yield takeLatest(getInventoryOuts.type, inventoryOutSaga);
+  yield takeLatest(addInventoryOuts.type, inventoryOutAddSaga);
+  yield takeLatest(editInventoryOuts.type, inventoryOutUpdateSaga);
 }

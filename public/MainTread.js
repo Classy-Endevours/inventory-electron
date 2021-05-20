@@ -41,3 +41,12 @@ isDev
       '',
       '../controller/inventoryInController',
     )}`);
+
+// include inventory Out Controller
+isDev
+  ? require('../controller/inventoryOutController')
+  : require(`${path.join(
+      __dirname,
+      '',
+      '../controller/inventoryOutController',
+    )}`);
