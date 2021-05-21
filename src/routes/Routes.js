@@ -15,6 +15,7 @@ import Vendors from '../components/Vendors';
 import Supplier from '../components/Supplier';
 import InventoryIn from '../components/inventoryIn';
 import Setting from '../components/Settings';
+import Challan from '../components/Challan';
 
 function Routes() {
   // let location = useLocation();
@@ -38,6 +39,9 @@ function Routes() {
         </PrivateRoute>
         <PrivateRoute path="/InventoryIn">
           <HomePage MainComponent={InventoryIn} />
+        </PrivateRoute>
+        <PrivateRoute path="/Challan">
+          <HomePage MainComponent={Challan} />
         </PrivateRoute>
         <PrivateRoute path="/Settings">
           <HomePage MainComponent={Setting} />
