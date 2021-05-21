@@ -58,7 +58,7 @@ export default function HomePage({ MainComponent }) {
             <DashboardMenu.Item key="6">Inventory Out</DashboardMenu.Item>
             <DashboardMenu.Item key="7">Challan</DashboardMenu.Item>
             <DashboardMenu.Item
-              key="7"
+              key="8"
               onClick={() => history.push('/Settings')}
             >
               Settings

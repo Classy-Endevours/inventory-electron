@@ -38,6 +38,14 @@ import {
   addInventoryIns,
   editInventoryIns,
 } from '../../components/inventoryIn/reducer';
+import {
+  updateSetting,
+  getSetting,
+} from '../../components/Settings/BasicDetail/reducer';
+import {
+  basicDetailsSaga,
+  getBasicDetailsSaga,
+} from '../../components/Settings/BasicDetail/saga';
 
 export default function* watcherSagas() {
   yield takeLatest(login.type, loginSaga);
@@ -53,4 +61,6 @@ export default function* watcherSagas() {
   yield takeLatest(getInventoryIns.type, inventoryInSaga);
   yield takeLatest(addInventoryIns.type, inventoryInAddSaga);
   yield takeLatest(editInventoryIns.type, inventoryInUpdateSaga);
+  yield takeLatest(updateSetting.type, basicDetailsSaga);
+  yield takeLatest(getSetting.type, getBasicDetailsSaga);
 }
