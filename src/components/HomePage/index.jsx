@@ -55,7 +55,12 @@ export default function HomePage({ MainComponent }) {
             >
               Inventory In
             </DashboardMenu.Item>
-            <DashboardMenu.Item key="6">Inventory Out</DashboardMenu.Item>
+            <DashboardMenu.Item
+              key="6"
+              onClick={() => history.push('/InventoryOut')}
+            >
+              Inventory Out
+            </DashboardMenu.Item>
             <DashboardMenu.Item
               key="7"
               onClick={() => history.push('/Challan')}

@@ -1,5 +1,6 @@
+/* eslint-disable no-empty */
 /* eslint-disable react/prop-types */
-import { Form, Input, notification } from 'antd';
+import { Form, Input } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSetting, getSetting } from './reducer';
@@ -13,7 +14,7 @@ const Basic = ({
     gstNo: '12121212121',
   },
 }) => {
-  const { isLoading, message, success, fail } = useSelector(
+  const { isLoading, success, fail } = useSelector(
     (state) => state.BasicSettingReducer,
   );
   const dispatch = useDispatch();
@@ -23,17 +24,12 @@ const Basic = ({
 
   useEffect(async () => {
     if (success && !fail) {
-      notification.success({
-        message: 'Success',
-        description: message,
-        duration: 2,
-      });
     } else if (!success && fail) {
-      notification.error({
-        message: 'Error',
-        description: message,
-        duration: 2,
-      });
+      // notification.error({
+      //   message: 'Error',
+      //   description: message,
+      //   duration: 2,
+      // });
     }
   }, [isLoading, success, fail]);
 

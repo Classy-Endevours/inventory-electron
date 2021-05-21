@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable('inventoryIns', {
+    await queryInterface.createTable('inventoryOuts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = {
       rate: {
         type: Sequelize.FLOAT,
       },
-      hour: {
+      quantity: {
         type: Sequelize.FLOAT,
       },
       createdAt: {
@@ -31,10 +31,10 @@ module.exports = {
         },
         allowNull: false,
       },
-      supplierId: {
+      vendorId: {
         type: Sequelize.INTEGER,
         reference: {
-          model: 'supplier',
+          model: 'vendor',
           key: 'id',
         },
         allowNull: false,
@@ -42,6 +42,6 @@ module.exports = {
     });
   },
   down: async (queryInterface) => {
-    await queryInterface.dropTable('inventoryIns');
+    await queryInterface.dropTable('inventoryOuts');
   },
 };
