@@ -1,5 +1,6 @@
 const { ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
+const path = require('path');
 
 const response = isDev
   ? require('../config/responseConfig')
