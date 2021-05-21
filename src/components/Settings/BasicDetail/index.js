@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Form, Input } from 'antd';
-import { NewContentButton } from '../../common/uielements/Collection.style';
-import { SpacedTitle } from '../../common/uielements/Typo.style';
+import { Form, Input, notification } from 'antd';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSetting, getSetting } from './reducer';
+import { NewContentButton } from '../../../common/uielements/Collection.style';
+import { SpacedTitle } from '../../../common/uielements/Typo.style';
 
 const Basic = ({
   initialValues = {
@@ -10,9 +13,33 @@ const Basic = ({
     gstNo: '12121212121',
   },
 }) => {
+  const { isLoading, message, success, fail } = useSelector(
+    (state) => state.BasicSettingReducer,
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSetting());
+  }, []);
+
+  useEffect(async () => {
+    if (success && !fail) {
+      notification.success({
+        message: 'Success',
+        description: message,
+        duration: 2,
+      });
+    } else if (!success && fail) {
+      notification.error({
+        message: 'Error',
+        description: message,
+        duration: 2,
+      });
+    }
+  }, [isLoading, success, fail]);
+
   const [form] = Form.useForm();
   const onSubmit = (values) => {
-    console.log({ values });
+    dispatch(updateSetting(values));
   };
   const validate = () => {
     form
