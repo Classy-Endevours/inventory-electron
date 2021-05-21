@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 const saltRounds = 10;
 const response = isDev
