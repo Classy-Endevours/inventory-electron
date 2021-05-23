@@ -37,10 +37,7 @@ const InventoryInSlicer = createSlice({
   },
 });
 
-export const {
-  getChallanFailed,
-  getChallan,
-  getChallanSuccess,
-} = InventoryInSlicer.actions;
+export const { getChallanFailed, getChallan, getChallanSuccess } =
+  InventoryInSlicer.actions;
 
 export default InventoryInSlicer.reducer;
