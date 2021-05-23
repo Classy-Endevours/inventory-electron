@@ -1,10 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 import { Col, Row } from 'antd';
-import { EditTwoTone } from '@ant-design/icons';
+import { EditTwoTone, SnippetsTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
-export const getColumns = (onEditAction) => [
+export const getColumns = (onEditAction, onReportAction) => [
   {
     title: 'Sr. No',
     key: 'index',
@@ -57,6 +57,9 @@ export const getColumns = (onEditAction) => [
     key: 'x',
     render: (itemName, row) => (
       <Row>
+        <Col>
+          <SnippetsTwoTone onClick={() => onReportAction(itemName, row)} />
+        </Col>
         <Col>
           <EditTwoTone onClick={() => onEditAction(itemName, row)} />
         </Col>
