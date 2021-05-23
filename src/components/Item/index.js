@@ -15,6 +15,7 @@ import {
 } from '../../common/uielements/Collection.style';
 import { getColumns } from './data';
 import { AddItemForm } from '../../common/components/item/addForm';
+import { MoreLink } from '../../common/components/regular/Links';
 
 const { Content } = Layout;
 
@@ -102,7 +103,7 @@ const Item = () => {
         <Col type="flex" align="top" justify="space-around" span={6}>
           <BorderedCard
             title="Recent Inventory Out"
-            extra={<span>More</span>}
+            extra={<MoreLink text="More" url="/InventoryOut" />}
             style={{ width: 300 }}
             loading={isLoading}
           >
@@ -113,7 +114,7 @@ const Item = () => {
           <Divider />
           <BorderedCard
             title="Top Inventory Out"
-            extra={<span>More</span>}
+            extra={<MoreLink text="More" url="/InventoryOut" />}
             style={{ width: 300 }}
             loading={isLoading}
           >

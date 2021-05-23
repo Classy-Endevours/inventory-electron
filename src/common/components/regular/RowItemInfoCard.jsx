@@ -1,9 +1,11 @@
+import moment from 'moment';
 import {
   CheckCircleTwoTone,
   DownCircleTwoTone,
   UpCircleTwoTone,
 } from '@ant-design/icons';
 import { Col, Row } from 'antd';
+import { NewItemTag } from './Tag';
 
 /* eslint-disable react/prop-types */
 export const RowItemInfoCard = ({ item }) => {
@@ -42,15 +44,26 @@ export const RowItemInfoCard = ({ item }) => {
   return (
     <Row justify="end">
       <Col span={9}>
-        <p>{item.itemName}</p>
+        <p
+          style={{
+            lineBreak: 'anywhere',
+            paddingRight: 2,
+          }}
+        >
+          {item.item.productName}
+        </p>
       </Col>
       <Col span={6}>
         <p>{item.totalOutEarns}rs</p>
       </Col>
       <Col span={6}>
-        <p style={{ color: getColor(item.lastWeekProgress) }}>
-          {item.lastWeekProgress}%
-        </p>
+        {item.lastWeekProgress ? (
+          <p style={{ color: getColor(item.lastWeekProgress) }}>
+            {item.lastWeekProgress}%
+          </p>
+        ) : (
+          <NewItemTag />
+        )}
       </Col>
       <Col span={3}>{getIcon(item.lastWeekProgress || 0)}</Col>
     </Row>
@@ -60,13 +73,20 @@ export const RowItemRecentCard = ({ item }) => {
   return (
     <Row>
       <Col span={8}>
-        <p>{item.itemName}</p>
+        <p
+          style={{
+            lineBreak: 'anywhere',
+            paddingRight: 2,
+          }}
+        >
+          {item.item.productName}
+        </p>
       </Col>
       <Col span={10}>
-        <p>{item.updatedAt}</p>
+        <p>{moment(item.updatedAt).format('MMM Do YY')}</p>
       </Col>
       <Col span={6}>
-        <p>{(item.count < 10 ? '0' : '') + item.count} count</p>
+        <p>{(item.quantity < 10 ? '0' : '') + item.quantity} count</p>
       </Col>
     </Row>
   );
