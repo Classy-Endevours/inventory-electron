@@ -14,11 +14,13 @@ import {
 } from '../../common/uielements/Collection.style';
 import { getColumns } from './data';
 import { AddInventoryOutForm } from '../../common/components/inventoryOut/addForm';
+import { ChallanForm } from '../../common/components/inventoryOut/challanForm';
 
 const { Content } = Layout;
 
 const InventoryOut = () => {
   const [addItemModal, setAddItemModal] = useState(false);
+  const [challanModal, setChallanModal] = useState(false);
   const [mode, setMode] = useState('');
   const [currentObject, setCurrentObject] = useState({});
   const { isLoading, inventoryOut, isAddLoading, isEditLoading } = useSelector(
@@ -44,6 +46,21 @@ const InventoryOut = () => {
         break;
     }
   };
+
+  const getColumnsWithAction = () => {
+    const editHandler = (item) => {
+      setCurrentObject(item);
+      setMode('edit');
+      setAddItemModal(true);
+    };
+    const challanHandler = (item) => {
+      setMode('download');
+      setCurrentObject(item);
+      setChallanModal(true);
+    };
+    return getColumns(editHandler, challanHandler);
+  };
+
   return (
     <Content>
       {addItemModal && (
@@ -61,6 +78,18 @@ const InventoryOut = () => {
                 }
           }
           setCurrentObject={setCurrentObject}
+          mode={mode}
+          loading={mode === 'new' ? isAddLoading : isEditLoading}
+        />
+      )}
+      {challanModal && (
+        <ChallanForm
+          title="Download Challan"
+          isOpen={challanModal}
+          onOk={(data) => onOk(data)}
+          onCancel={() => setChallanModal(!challanModal)}
+          setCurrentObject={setCurrentObject}
+          initialValues={currentObject}
           mode={mode}
           loading={mode === 'new' ? isAddLoading : isEditLoading}
         />
@@ -90,11 +119,7 @@ const InventoryOut = () => {
       <Row justify="space-around">
         <Col span={24}>
           <ColorerdTable
-            columns={getColumns((item) => {
-              setCurrentObject(item);
-              setMode('edit');
-              setAddItemModal(true);
-            })}
+            columns={getColumnsWithAction()}
             dataSource={inventoryOut}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}
