@@ -5,7 +5,7 @@ const path = require('path');
 const response = isDev
   ? require('../config/responseConfig')
   : require(`${path.join(__dirname, '', '../config/responseConfig')}`);
-const { challan, items, inventoryOut } = isDev
+const { challan, items, inventoryOut, vendor } = isDev
   ? require('../models')
   : require(`${path.join(__dirname, '', '../models')}`);
 
@@ -36,7 +36,13 @@ ipcMain.on('challan-fetch-message', async (event, arg) => {
       options.offset = arg.offset;
       options.limit = 15;
     }
-    options.include = [items, inventoryOut];
+    options.include = [
+      items,
+      {
+        model: inventoryOut,
+        include: [vendor],
+      },
+    ];
     options.raw = true;
     options.nest = true;
     const item = await challan.findAll(options);
@@ -48,7 +54,7 @@ ipcMain.on('challan-fetch-message', async (event, arg) => {
         }),
       );
     } else {
-      const err = new Error('No Inventory In Found');
+      const err = new Error('No Challans In Found');
       throw err;
     }
   } catch (error) {

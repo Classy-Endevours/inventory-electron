@@ -23,7 +23,7 @@ const InventoryInSlicer = createSlice({
     }),
     getChallanSuccess: (state, action) => ({
       ...state,
-      challans: action.payload.data.challans ?? [],
+      challans: action.payload.data.challan ?? [],
       isLoading: false,
       isSuccess: true,
       isError: false,

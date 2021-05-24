@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import { Col, Row } from 'antd';
-import { EditTwoTone, SnippetsTwoTone } from '@ant-design/icons';
+import { SnippetsTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
@@ -9,6 +9,12 @@ export const getColumns = (onEditAction, onReportAction) => [
     title: 'Sr. No',
     key: 'index',
     render: (value, item, index) => index + 1,
+    // defaultSortOrder: 'descend',
+  },
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    sorter: (a, b) => a.id - b.id,
     // defaultSortOrder: 'descend',
   },
   {
@@ -36,7 +42,7 @@ export const getColumns = (onEditAction, onReportAction) => [
   {
     title: 'Rate',
     dataIndex: 'rate',
-    sorter: (a, b) => a.composition - b.composition,
+    sorter: (a, b) => a.rate - b.rate,
   },
   {
     title: 'Quantity',
@@ -60,9 +66,9 @@ export const getColumns = (onEditAction, onReportAction) => [
         <Col>
           <SnippetsTwoTone onClick={() => onReportAction(itemName, row)} />
         </Col>
-        <Col>
+        {/* <Col>
           <EditTwoTone onClick={() => onEditAction(itemName, row)} />
-        </Col>
+        </Col> */}
       </Row>
     ),
   },

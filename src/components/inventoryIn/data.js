@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
-import { Col, Row } from 'antd';
-import { EditTwoTone } from '@ant-design/icons';
+/* eslint-disable no-unused-vars */
+// import { Col, Row } from 'antd';
+// import { EditTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
@@ -9,6 +10,12 @@ export const getColumns = (onEditAction) => [
     title: 'Sr. No',
     key: 'index',
     render: (value, item, index) => index + 1,
+    // defaultSortOrder: 'descend',
+  },
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    sorter: (a, b) => a.id - b.id,
     // defaultSortOrder: 'descend',
   },
   {
@@ -51,17 +58,17 @@ export const getColumns = (onEditAction) => [
       return moment(text).format('MMM Do YY');
     },
   },
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: 'x',
-    render: (itemName, row) => (
-      <Row>
-        <Col>
-          <EditTwoTone onClick={() => onEditAction(itemName, row)} />
-        </Col>
-      </Row>
-    ),
-  },
+  // {
+  //   title: 'Action',
+  //   dataIndex: '',
+  //   key: 'x',
+  //   render: (itemName, row) => (
+  //     <Row>
+  //       <Col>
+  //         <EditTwoTone onClick={() => onEditAction(itemName, row)} />
+  //       </Col>
+  //     </Row>
+  //   ),
+  // },
 ];
 export default {};

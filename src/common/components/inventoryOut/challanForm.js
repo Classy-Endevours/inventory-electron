@@ -83,7 +83,6 @@ export function ChallanForm({
             <Title level={2}>Rajesh Export</Title>
             <p>Rajesh export address</p>
             <p>Rajesh export GST number</p>
-            <p>Invetory challan at 30/04/2021 5:30am</p>
           </Form.Item>
           <Form.Item
             name="productName"

@@ -17,6 +17,7 @@ const { ipcRenderer } = electron;
 function getChallanDb(payload) {
   return new Promise((resolve) => {
     ipcRenderer.once('challan-fetch-reply', (_, arg) => {
+      console.log({ arg });
       resolve(arg);
     });
     ipcRenderer.send('challan-fetch-message', payload);
