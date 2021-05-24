@@ -15,10 +15,10 @@ ipcMain.on('challan-create-message', async (event, arg) => {
     if (item !== null) {
       event.reply(
         'challan-create-reply',
-        response.success('Inventory In Saved successfully', item),
+        response.success('Challan Saved successfully', item),
       );
     } else {
-      const err = new Error('Inventory In saving failed');
+      const err = new Error('Challan saving failed');
       throw err;
     }
   } catch (error) {

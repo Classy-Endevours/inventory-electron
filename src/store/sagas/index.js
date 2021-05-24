@@ -56,8 +56,16 @@ import {
   basicDetailsSaga,
   getBasicDetailsSaga,
 } from '../../components/Settings/BasicDetail/saga';
-import { getChallan } from '../../components/Challan/reducer';
-import { getChallanSaga } from '../../components/Challan/saga';
+import {
+  getChallan,
+  editChallan,
+  addChallan,
+} from '../../components/Challan/reducer';
+import {
+  getChallanSaga,
+  challanAddSaga,
+  challanUpdateSaga,
+} from '../../components/Challan/saga';
 
 export default function* watcherSagas() {
   yield takeLatest(login.type, loginSaga);
@@ -79,4 +87,6 @@ export default function* watcherSagas() {
   yield takeLatest(updateSetting.type, basicDetailsSaga);
   yield takeLatest(getSetting.type, getBasicDetailsSaga);
   yield takeLatest(getChallan.type, getChallanSaga);
+  yield takeLatest(addChallan.type, challanAddSaga);
+  yield takeLatest(editChallan.type, challanUpdateSaga);
 }

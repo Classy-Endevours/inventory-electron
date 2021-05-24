@@ -107,6 +107,18 @@ export function ChallanForm({
               },
             ]}
           >
+            <Input disabled />
+          </Form.Item>
+          <Form.Item
+            name="truckNo"
+            label="Truck/Tempo No."
+            rules={[
+              {
+                required: true,
+                message: 'Please input the vendor name!',
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
           <Form.Item
@@ -124,6 +136,7 @@ export function ChallanForm({
               autoComplete="disabled"
               precision={2}
               min={0}
+              disabled
               defaultValue={quantity}
               onChange={(value) => setQuantity(value)}
             />
@@ -144,9 +157,10 @@ export function ChallanForm({
               precision={2}
               min={0}
               defaultValue={rate}
+              disabled
               onChange={(value) => setRate(value)}
             />{' '}
-            rs
+            ₹
           </Form.Item>
           <Form.Item name="totalQuantity" label="Total quantity">
             <InputNumber
@@ -157,7 +171,7 @@ export function ChallanForm({
               min={0}
               defaultValue={quantity * rate}
             />{' '}
-            rs
+            ₹
           </Form.Item>
         </Form>
       </div>
