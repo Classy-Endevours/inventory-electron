@@ -5,7 +5,7 @@ const path = require('path');
 const response = isDev
   ? require('../config/responseConfig')
   : require(`${path.join(__dirname, '', '../config/responseConfig')}`);
-const { inventoryOut, items, vendor } = isDev
+const { inventoryOut, items, vendor, challan } = isDev
   ? require('../models')
   : require(`${path.join(__dirname, '', '../models')}`);
 
@@ -40,7 +40,7 @@ ipcMain.on('inventoryOut-fetch-message', async (event, arg) => {
       options.offset = arg.offset;
       options.limit = 15;
     }
-    options.include = [items, vendor];
+    options.include = [items, vendor, challan];
     options.raw = true;
     options.nest = true;
     const item = await inventoryOut.findAll(options);

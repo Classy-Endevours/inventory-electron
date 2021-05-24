@@ -48,12 +48,12 @@ ipcMain.on('items-fetch-message', async (event, arg) => {
           [sequelize.literal('SUM(quantity*rate)'), 'totalOutEarns'],
         ],
         group: ['item.id'],
-        where: {
-          createdAt: {
-            [Op.gte]: moment().subtract(1, 'days').toDate(),
-            [Op.lte]: moment().subtract(0, 'days').toDate(),
-          },
-        },
+        // where: {
+        //   createdAt: {
+        //     [Op.gte]: moment().subtract(7, 'days').toDate(),
+        //     [Op.lte]: moment().subtract(0, 'days').toDate(),
+        //   },
+        // },
         order: [[sequelize.literal('totalOutEarns'), 'DESC']],
       },
     };

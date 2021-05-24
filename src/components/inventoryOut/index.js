@@ -8,6 +8,8 @@ import {
   addInventoryOuts,
   editInventoryOuts,
 } from './reducer';
+
+import { addChallan, editChallan } from '../Challan/reducer';
 import {
   ColorerdTable,
   NewContentButton,
@@ -26,6 +28,11 @@ const InventoryOut = () => {
   const { isLoading, inventoryOut, isAddLoading, isEditLoading } = useSelector(
     (state) => state.InventoryOutReducer,
   );
+
+  const {
+    isAddLoading: isAddChallanLoading,
+    isEditLoading: isEditChallanLoading,
+  } = useSelector((state) => state.ChallanReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,6 +49,12 @@ const InventoryOut = () => {
       case 'edit':
         dispatch(editInventoryOuts(data));
         break;
+      case 'newChallan':
+        dispatch(addChallan(data));
+        break;
+      case 'editChallan':
+        dispatch(editChallan(data));
+        break;
       default:
         break;
     }
@@ -54,8 +67,22 @@ const InventoryOut = () => {
       setAddItemModal(true);
     };
     const challanHandler = (item) => {
-      setMode('download');
-      setCurrentObject(item);
+      if (item.challan.id) {
+        setMode('editChallan');
+        setCurrentObject({
+          ...item,
+          productName: item.challan.productName,
+          name: item.vendor.name,
+          truckNo: item.challan.truckNo,
+        });
+      } else {
+        setMode('newChallan');
+        setCurrentObject({
+          ...item,
+          productName: item.item.productName,
+          name: item.vendor.name,
+        });
+      }
       setChallanModal(true);
     };
     return getColumns(editHandler, challanHandler);
@@ -91,7 +118,9 @@ const InventoryOut = () => {
           setCurrentObject={setCurrentObject}
           initialValues={currentObject}
           mode={mode}
-          loading={mode === 'new' ? isAddLoading : isEditLoading}
+          loading={
+            mode === 'newChallan' ? isAddChallanLoading : isEditChallanLoading
+          }
         />
       )}
 

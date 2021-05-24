@@ -1,10 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
-import { Col, Row } from 'antd';
-import { EditTwoTone } from '@ant-design/icons';
+// import { Col, Row } from 'antd';
+// import { EditTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
-export const getColumns = (onEditAction) => [
+export const getColumns = () => [
   {
     title: 'Sr. No',
     key: 'index',
@@ -12,36 +12,45 @@ export const getColumns = (onEditAction) => [
     // defaultSortOrder: 'descend',
   },
   {
+    title: 'Inventory Out ID',
+    dataIndex: 'inventoryOut',
+    sorter: (a, b) => a.id - b.id,
+    render: (inventoryOut) => inventoryOut.id,
+    // defaultSortOrder: 'descend',
+  },
+  {
     title: 'Item Name',
-    dataIndex: 'item',
+    dataIndex: 'productName',
     // specify the condition of filtering result
     // here is that finding the name started with `value`
     onFilter: (value, record) => record.itemName.indexOf(value) === 0,
     sorter: (a, b) => a.itemName.localeCompare(b.itemName),
     // sortDirections: ['descend'],
-    render: (itemName) => {
-      return <ColoredRow>{itemName.productName}</ColoredRow>;
+    render: (productName) => {
+      return <ColoredRow>{productName}</ColoredRow>;
     },
   },
   {
-    title: 'Supplier',
-    dataIndex: 'supplier',
+    title: 'Vendor',
+    dataIndex: 'inventoryOut',
     filterMultiple: false,
     onFilter: (value, record) => record.hsnCode.indexOf(value) === 0,
     sorter: (a, b) => a.hsnCode.length - b.hsnCode.length,
-    render: (supplier) => {
-      return <ColoredRow>{supplier.name}</ColoredRow>;
+    render: (inventoryOut) => {
+      return <ColoredRow>{inventoryOut.vendor.name}</ColoredRow>;
     },
   },
   {
     title: 'Rate',
-    dataIndex: 'rate',
+    dataIndex: 'inventoryOut',
     sorter: (a, b) => a.composition - b.composition,
+    render: (inventoryOut) => inventoryOut.rate,
   },
   {
     title: 'Quantity',
-    dataIndex: 'quantity',
+    dataIndex: 'inventoryOut',
     sorter: (a, b) => a.percent - b.percent,
+    render: (inventoryOut) => inventoryOut.quantity,
   },
   {
     title: 'Date',
@@ -51,17 +60,17 @@ export const getColumns = (onEditAction) => [
       return moment(text).format('MMM Do YY');
     },
   },
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: 'x',
-    render: (itemName, row) => (
-      <Row>
-        <Col>
-          <EditTwoTone onClick={() => onEditAction(itemName, row)} />
-        </Col>
-      </Row>
-    ),
-  },
+  // {
+  //   title: 'Action',
+  //   dataIndex: '',
+  //   key: 'x',
+  //   render: (itemName, row) => (
+  //     <Row>
+  //       <Col>
+  //         <EditTwoTone onClick={() => onEditAction(itemName, row)} />
+  //       </Col>
+  //     </Row>
+  //   ),
+  // },
 ];
 export default {};

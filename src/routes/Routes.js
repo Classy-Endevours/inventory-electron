@@ -59,7 +59,7 @@ export default Routes;
 // Define public Route
 
 function PublicRoute({ children, ...rest }) {
-  const login = localStorage.getItem('login') !== 'false';
+  const login = localStorage.getItem('login') === 'true';
   return (
     <Route
       {...rest}
@@ -81,7 +81,7 @@ function PublicRoute({ children, ...rest }) {
 
 // Define Private Route
 function PrivateRoute({ children, ...rest }) {
-  const login = localStorage.getItem('login') !== 'false';
+  const login = localStorage.getItem('login') === 'true';
   return (
     <Route
       {...rest}
