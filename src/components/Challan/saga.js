@@ -7,10 +7,10 @@ const { ipcRenderer } = electron;
 
 function getChallanDb(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('inventoryIn-fetch-reply', (_, arg) => {
+    ipcRenderer.once('challan-fetch-reply', (_, arg) => {
       resolve(arg);
     });
-    ipcRenderer.send('inventoryIn-fetch-message', payload);
+    ipcRenderer.send('challan-fetch-message', payload);
   });
 }
 

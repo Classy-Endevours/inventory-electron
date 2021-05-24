@@ -1,10 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
-import { Col, Row } from 'antd';
-import { EditTwoTone } from '@ant-design/icons';
+// import { Col, Row } from 'antd';
+// import { EditTwoTone } from '@ant-design/icons';
 import moment from 'moment';
 import { ColoredRow } from '../../common/uielements/Collection.style';
 
-export const getColumns = (onEditAction) => [
+export const getColumns = () => [
   {
     title: 'Sr. No',
     key: 'index',
@@ -51,17 +51,17 @@ export const getColumns = (onEditAction) => [
       return moment(text).format('MMM Do YY');
     },
   },
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: 'x',
-    render: (itemName, row) => (
-      <Row>
-        <Col>
-          <EditTwoTone onClick={() => onEditAction(itemName, row)} />
-        </Col>
-      </Row>
-    ),
-  },
+  // {
+  //   title: 'Action',
+  //   dataIndex: '',
+  //   key: 'x',
+  //   render: (itemName, row) => (
+  //     <Row>
+  //       <Col>
+  //         <EditTwoTone onClick={() => onEditAction(itemName, row)} />
+  //       </Col>
+  //     </Row>
+  //   ),
+  // },
 ];
 export default {};

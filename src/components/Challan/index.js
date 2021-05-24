@@ -8,7 +8,7 @@ import { getColumns } from './data';
 
 const { Content } = Layout;
 
-const InventoryIn = () => {
+const Challan = () => {
   const { isLoading, challans } = useSelector((state) => state.ChallanReducer);
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const InventoryIn = () => {
       <Row justify="space-around">
         <Col span={24}>
           <ColorerdTable
-            columns={getColumns(() => {})}
+            columns={getColumns()}
             dataSource={challans}
             pagination={{ pageSize: 10 }}
             style={{ padding: 10 }}
@@ -34,4 +34,4 @@ const InventoryIn = () => {
     </Content>
   );
 };
-export default InventoryIn;
+export default Challan;
