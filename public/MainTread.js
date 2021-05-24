@@ -99,3 +99,8 @@ isDev
       '',
       '../controller/inventoryOutController',
     )}`);
+
+// include Challan Controller
+isDev
+  ? require('../controller/challanController')
+  : require(`${path.join(__dirname, '', '../controller/challanController')}`);
