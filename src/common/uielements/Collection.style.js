@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Table, Card, Button, Tag } from 'antd';
+import { Table, Card, Button, Tag, Divider } from 'antd';
 
 export const ColorerdTable = styled(Table)`
   border: 1px solid #dfe1e8;
@@ -34,5 +34,7 @@ export const NewItemTagStyle = styled(Tag)`
   color: #108ee9,
   border-radius: 10px
 `;
-
+export const DividerWithlessMargin = styled(Divider)`
+  margin: 10px;
+`;
 export default {};

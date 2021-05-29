@@ -17,6 +17,7 @@ import InventoryIn from '../components/inventoryIn';
 import InventoryOut from '../components/inventoryOut';
 import Setting from '../components/Settings';
 import Challan from '../components/Challan';
+import ItemDetail from '../components/ItemDetail';
 
 function Routes() {
   // let location = useLocation();
@@ -46,6 +47,9 @@ function Routes() {
         </PrivateRoute>
         <PrivateRoute path="/Settings">
           <HomePage MainComponent={Setting} />
+        </PrivateRoute>
+        <PrivateRoute path="/itemDetails">
+          <HomePage MainComponent={ItemDetail} />
         </PrivateRoute>
         <PrivateRoute path="/InventoryOut">
           <HomePage MainComponent={InventoryOut} />

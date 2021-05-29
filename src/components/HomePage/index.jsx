@@ -74,6 +74,12 @@ export default function HomePage({ MainComponent }) {
               Settings
             </DashboardMenu.Item>
             <DashboardMenu.Item
+              key="10"
+              onClick={() => history.push('/itemDetails')}
+            >
+              Comparison
+            </DashboardMenu.Item>
+            <DashboardMenu.Item
               key="9"
               onClick={async () => {
                 dispatch(clear());
