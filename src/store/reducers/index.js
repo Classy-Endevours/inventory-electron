@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import DashboardReducer from '../../components/Dashboard/reducer';
 import loginReducer from '../../components/Login/reducer';
 import ItemsReducer from '../../components/Item/reducer';
 import SupplierReducer from '../../components/Supplier/reducer';
@@ -17,5 +18,6 @@ const reducer = combineReducers({
   InventoryOutReducer,
   BasicSettingReducer,
   ChallanReducer,
+  DashboardReducer,
 });
 export default reducer;

@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Line } from '@ant-design/charts';
+import { Spin } from 'antd';
+import Paragraph from 'antd/lib/typography/Paragraph';
+import { getLineGraph } from '../../../components/Dashboard/reducer';
 
 const DemoLine = () => {
-  const [data, setData] = useState([]);
+  const {
+    isLoading,
+    isError,
+    data: items,
+  } = useSelector((state) => state.DashboardReducer.lineGraph);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // eslint-disable-next-line no-use-before-define
-    asyncFetch();
+    dispatch(getLineGraph());
   }, []);
-  const asyncFetch = () => {
-    fetch(
-      'https://gw.alipayobjects.com/os/bmw-prod/e00d52f4-2fa6-47ee-a0d7-105dd95bde20.json',
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   const config = {
-    data,
-    xField: 'year',
-    yField: 'gdp',
-    seriesField: 'name',
+    data: items,
+    xField: 'month_year',
+    yField: 'totalOutEarns',
+    seriesField: 'productName',
     yAxis: {
       label: {
         formatter: function formatter(v) {
-          return ''.concat((v / 1000000000).toFixed(1), ' B');
+          return ''.concat((v / 1).toFixed(1), ' rs');
         },
       },
     },
@@ -38,6 +38,12 @@ const DemoLine = () => {
       },
     },
   };
+  if (isLoading) {
+    return <Spin />;
+  }
+  if (isError) {
+    return <Paragraph>Some error occured while loading the graph</Paragraph>;
+  }
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <Line {...config} />;
 };
