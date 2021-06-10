@@ -66,8 +66,16 @@ import {
   challanAddSaga,
   challanUpdateSaga,
 } from '../../components/Challan/saga';
-import { lineGraphSaga } from '../../components/Dashboard/saga';
-import { getLineGraph } from '../../components/Dashboard/reducer';
+import {
+  lineGraphSaga,
+  columnGraphSaga,
+  allSupplierGraphSaga,
+} from '../../components/Dashboard/saga';
+import {
+  getLineGraph,
+  getColumnGraph,
+  getAllSupplierGraph,
+} from '../../components/Dashboard/reducer';
 
 export default function* watcherSagas() {
   yield takeLatest(login.type, loginSaga);
@@ -94,4 +102,6 @@ export default function* watcherSagas() {
 
   // dashboard sagas and reducers
   yield takeLatest(getLineGraph.type, lineGraphSaga);
+  yield takeLatest(getColumnGraph.type, columnGraphSaga);
+  yield takeLatest(getAllSupplierGraph.type, allSupplierGraphSaga);
 }
