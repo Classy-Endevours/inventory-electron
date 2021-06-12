@@ -1,6 +1,9 @@
 name: Share data between jobs
 
-on: [push]
+on:
+  push:
+    branches:
+      - artifacts-template
 
 jobs:
   job_1:
