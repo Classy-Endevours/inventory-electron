@@ -48,6 +48,7 @@
     "dist": "electron-builder",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
+    "package": "yarn electron:build --publish=always",
     "electron:start": "wait-on tcp:3000 && electron .",
     "postinstall": "electron-builder install-app-deps",
     "migration:create": "sequelize-cli migration:create --name",
@@ -67,6 +68,13 @@
       "buildResources": "assets"
     }
   },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "classy endevour",
+      "repo": "inventory-electron"
+    }
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
