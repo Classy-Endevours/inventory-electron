@@ -1,6 +1,6 @@
 {
   "name": "inventory-rajesh-exports",
-  "version": "0.1.4",
+  "version": "0.1.1",
   "private": true,
   "main": "public/main.js",
   "homepage": "./",
