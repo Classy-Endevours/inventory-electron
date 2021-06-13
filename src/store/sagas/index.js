@@ -70,11 +70,13 @@ import {
   lineGraphSaga,
   columnGraphSaga,
   allSupplierGraphSaga,
+  getComparisonGraphSaga,
 } from '../../components/Dashboard/saga';
 import {
   getLineGraph,
   getColumnGraph,
   getAllSupplierGraph,
+  getComparisonGraph,
 } from '../../components/Dashboard/reducer';
 
 export default function* watcherSagas() {
@@ -104,4 +106,5 @@ export default function* watcherSagas() {
   yield takeLatest(getLineGraph.type, lineGraphSaga);
   yield takeLatest(getColumnGraph.type, columnGraphSaga);
   yield takeLatest(getAllSupplierGraph.type, allSupplierGraphSaga);
+  yield takeLatest(getComparisonGraph.type, getComparisonGraphSaga);
 }

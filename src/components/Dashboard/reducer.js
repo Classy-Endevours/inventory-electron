@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const mergeNestedObjects = (arr, key) => {
+export const mergeNestedObjects = (arr, key) => {
   const newArray = arr.map((e) => {
     const json = { ...e, ...e[key] };
     delete json[key];
@@ -26,6 +26,12 @@ const DashboardSlicer = createSlice({
     },
     allSuppliers: {
       data: [],
+      isSuccess: false,
+      isError: false,
+      isLoading: false,
+    },
+    comparison: {
+      data: {},
       isSuccess: false,
       isError: false,
       isLoading: false,
@@ -122,6 +128,35 @@ const DashboardSlicer = createSlice({
         data: [],
       },
     }),
+    getComparisonGraph: (state) => ({
+      ...state,
+      comparison: {
+        ...state.comparison,
+        isLoading: true,
+        isSuccess: false,
+        isError: false,
+      },
+    }),
+    getComparisonGraphSuccess: (state, action) => ({
+      ...state,
+      comparison: {
+        ...state.comparison,
+        isLoading: false,
+        isSuccess: true,
+        isError: false,
+        data: action.payload.data.data ?? {},
+      },
+    }),
+    getComparisonGraphFailed: (state) => ({
+      ...state,
+      comparison: {
+        ...state.comparison,
+        isLoading: false,
+        isSuccess: false,
+        isError: true,
+        data: {},
+      },
+    }),
   },
 });
 
@@ -135,6 +170,9 @@ export const {
   getAllSupplierGraph,
   getAllSupplierGraphFailed,
   getAllSupplierGraphSuccess,
+  getComparisonGraph,
+  getComparisonGraphFailed,
+  getComparisonGraphSuccess,
 } = DashboardSlicer.actions;
 
 export default DashboardSlicer.reducer;

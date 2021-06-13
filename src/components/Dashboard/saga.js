@@ -7,6 +7,8 @@ import {
   getColumnGraphSuccess,
   getAllSupplierGraphFailed,
   getAllSupplierGraphSuccess,
+  getComparisonGraphFailed,
+  getComparisonGraphSuccess,
 } from './reducer';
 
 const electron = window.require('electron');
@@ -68,6 +70,29 @@ function* allSupplierGraphSaga(action) {
     yield put(getAllSupplierGraphFailed({ message: error.message }));
   }
 }
-export { lineGraphSaga, columnGraphSaga, allSupplierGraphSaga };
+function getComparisonGraphDB(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('report-item-comparison-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('report-item-comparison', payload);
+  });
+}
+
+function* getComparisonGraphSaga(action) {
+  try {
+    const response = yield getComparisonGraphDB(action.payload);
+    if (!response.error) yield put(getComparisonGraphSuccess(response));
+    else yield put(getComparisonGraphFailed(response));
+  } catch (error) {
+    yield put(getComparisonGraphFailed({ message: error.message }));
+  }
+}
+export {
+  lineGraphSaga,
+  columnGraphSaga,
+  allSupplierGraphSaga,
+  getComparisonGraphSaga,
+};
 
 export default {};

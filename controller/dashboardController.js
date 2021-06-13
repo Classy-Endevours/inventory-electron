@@ -23,7 +23,7 @@ ipcMain.on('report-items-fetch-message', async (event) => {
           },
         ],
         raw: true,
-        order: [['updatedAt', 'DESC']],
+        order: [['updatedAt', 'ASC']],
         nest: true,
       },
       lastWeek: {
@@ -50,7 +50,7 @@ ipcMain.on('report-items-fetch-message', async (event) => {
         //     [Op.lte]: moment().subtract(0, 'days').toDate(),
         //   },
         // },
-        order: [[sequelize.literal('month_year'), 'DESC']],
+        // order: [[sequelize.literal('month_year'), 'DESC']],
       },
     };
     const mostOutItems = await inventoryOut.findAll({
@@ -181,5 +181,99 @@ ipcMain.on('report-all-suppliers', async (event) => {
     );
   } catch (error) {
     event.reply('report-all-suppliers-reply', response.error(error.message));
+  }
+});
+ipcMain.on('report-item-comparison', async (event, arg) => {
+  try {
+    const utility = {
+      options: {
+        raw: true,
+        order: [['updatedAt', 'DESC']],
+        nest: true,
+        include: [inventoryIn, inventoryOut],
+      },
+      lastWeek: {
+        attributes: [
+          'id',
+          ['productName', 'name'],
+          [
+            sequelize.literal('SUM(inventoryOuts.quantity*inventoryOuts.rate)'),
+            'earn',
+          ],
+          [
+            sequelize.literal('SUM(inventoryIns.quantity*inventoryIns.rate)'),
+            'invest',
+          ],
+          [sequelize.literal('COUNT(inventoryIns.quantity)'), 'iteration'],
+          [sequelize.literal('SUM(inventoryOuts.quantity)'), 'sales'],
+        ],
+        group: ['items.id'],
+      },
+    };
+    const data = await items.findAll({
+      where: {
+        id: arg.id,
+      },
+      ...utility.options,
+      ...utility.lastWeek,
+    });
+    const comparisonChart = {
+      options: {
+        // limit: 4,
+        include: [
+          {
+            model: items,
+            attributes: ['productName'],
+            where: {
+              id: arg.id,
+            },
+          },
+        ],
+        raw: true,
+        order: [['updatedAt', 'ASC']],
+        nest: true,
+      },
+      lastWeek: {
+        attributes: [
+          'id',
+          [
+            sequelize.literal('strftime("%d-%m-%Y", inventoryOut.createdAt)'),
+            'month_year',
+          ],
+          [sequelize.literal('SUM(quantity*rate)'), 'totalOutEarns'],
+        ],
+        group: [
+          sequelize.fn(
+            'strftime',
+            '%d-%m-%Y',
+            sequelize.col('inventoryOut.createdAt'),
+            // 'createdAt',
+          ),
+          'item.id',
+        ],
+        // where: {
+        //   createdAt: {
+        //     [Op.gte]: moment().subtract(7, 'days').toDate(),
+        //     [Op.lte]: moment().subtract(0, 'days').toDate(),
+        //   },
+        // },
+        // order: [[sequelize.literal('month_year'), 'DESC']],
+      },
+    };
+    const graphItem = await inventoryOut.findAll({
+      ...comparisonChart.options,
+      ...comparisonChart.lastWeek,
+    });
+    event.reply(
+      'report-item-comparison-reply',
+      response.success('Items Found successfully', {
+        data: {
+          totalPlate: data,
+          data: graphItem,
+        },
+      }),
+    );
+  } catch (error) {
+    event.reply('report-item-comparison-reply', response.error(error.message));
   }
 });
