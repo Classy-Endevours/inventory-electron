@@ -5,19 +5,19 @@ import { ColorerdTable } from '../../uielements/Collection.style';
 const TotalPlate = ({ data }) => {
   const columns = [
     {
-      title: 'Item',
+      title: 'Item name',
       dataIndex: 'name',
     },
     {
-      title: 'Sales',
+      title: 'Sales(delivery)',
       dataIndex: 'sales',
     },
     {
-      title: 'Earned',
+      title: 'Earned(rs)',
       dataIndex: 'earn',
     },
     {
-      title: 'Investment',
+      title: 'Investment(rs)',
       dataIndex: 'invest',
     },
     {

@@ -1,85 +1,27 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Column } from '@ant-design/charts';
+import { Spin } from 'antd';
+import Paragraph from 'antd/lib/typography/Paragraph';
+import { getColumnGraph } from '../../../components/Dashboard/reducer';
 
 const ColumnGraph = () => {
-  const data = [
-    {
-      name: 'Inventory In',
-      date: 'Jan',
-      value: 100,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'Jan',
-      value: 50,
-    },
-    {
-      name: 'Inventory In',
-      date: 'Feb',
-      value: 100,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'Feb',
-      value: 10,
-    },
-    {
-      name: 'Inventory In',
-      date: 'Mar',
-      value: 10,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'Mar',
-      value: 50,
-    },
-    {
-      name: 'Inventory In',
-      date: 'Apr',
-      value: 100,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'Apr',
-      value: 50,
-    },
-    {
-      name: 'Inventory In',
-      date: 'May',
-      value: 40,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'May',
-      value: 100,
-    },
-    {
-      name: 'Inventory In',
-      date: 'Jun',
-      value: 100,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'Jun',
-      value: 50,
-    },
-    {
-      name: 'Inventory In',
-      date: 'July',
-      value: 17,
-    },
-    {
-      name: 'Inventory Out',
-      date: 'July',
-      value: 50,
-    },
-  ];
+  const {
+    isLoading,
+    isError,
+    data: items,
+  } = useSelector((state) => state.DashboardReducer.columnGraph);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getColumnGraph());
+  }, []);
   const config = {
-    data,
+    data: items,
     isGroup: true,
-    xField: 'date',
-    yField: 'value',
+    xField: 'month_year',
+    yField: 'totalCount',
     seriesField: 'name',
     label: {
       position: 'middle',
@@ -90,6 +32,12 @@ const ColumnGraph = () => {
       ],
     },
   };
+  if (isLoading) {
+    return <Spin />;
+  }
+  if (isError) {
+    return <Paragraph>Some error occured while loading the graph</Paragraph>;
+  }
   return <Column {...config} />;
 };
 

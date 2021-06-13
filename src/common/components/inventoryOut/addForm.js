@@ -48,7 +48,6 @@ export function AddInventoryOutForm({
     form
       .validateFields()
       .then((values) => {
-        console.log({ values });
         onOk({
           ...initialValues,
           ...values,

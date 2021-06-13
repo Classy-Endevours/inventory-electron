@@ -1,6 +1,15 @@
 /* eslint-disable no-param-reassign */
 import { put } from 'redux-saga/effects';
-import { getLineGraphFailed, getLineGraphSuccess } from './reducer';
+import {
+  getLineGraphFailed,
+  getLineGraphSuccess,
+  getColumnGraphFailed,
+  getColumnGraphSuccess,
+  getAllSupplierGraphFailed,
+  getAllSupplierGraphSuccess,
+  getComparisonGraphFailed,
+  getComparisonGraphSuccess,
+} from './reducer';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -23,6 +32,67 @@ function* lineGraphSaga(action) {
     yield put(getLineGraphFailed({ message: error.message }));
   }
 }
-export { lineGraphSaga };
+
+function getColumnGraphFromDB(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('report-inventory-in-out-fetch-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('report-inventory-in-out-fetch-message', payload);
+  });
+}
+
+function* columnGraphSaga(action) {
+  try {
+    const response = yield getColumnGraphFromDB(action.payload);
+    if (!response.error) yield put(getColumnGraphSuccess(response));
+    else yield put(getColumnGraphFailed(response));
+  } catch (error) {
+    yield put(getColumnGraphFailed({ message: error.message }));
+  }
+}
+
+function getAllSupplierFromDB(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('report-all-suppliers-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('report-all-suppliers', payload);
+  });
+}
+
+function* allSupplierGraphSaga(action) {
+  try {
+    const response = yield getAllSupplierFromDB(action.payload);
+    if (!response.error) yield put(getAllSupplierGraphSuccess(response));
+    else yield put(getAllSupplierGraphFailed(response));
+  } catch (error) {
+    yield put(getAllSupplierGraphFailed({ message: error.message }));
+  }
+}
+function getComparisonGraphDB(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('report-item-comparison-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('report-item-comparison', payload);
+  });
+}
+
+function* getComparisonGraphSaga(action) {
+  try {
+    const response = yield getComparisonGraphDB(action.payload);
+    if (!response.error) yield put(getComparisonGraphSuccess(response));
+    else yield put(getComparisonGraphFailed(response));
+  } catch (error) {
+    yield put(getComparisonGraphFailed({ message: error.message }));
+  }
+}
+export {
+  lineGraphSaga,
+  columnGraphSaga,
+  allSupplierGraphSaga,
+  getComparisonGraphSaga,
+};
 
 export default {};

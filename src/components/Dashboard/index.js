@@ -11,10 +11,6 @@ import ColumnGraph from '../../common/components/dashboard/ColumnGraph';
 const { Content } = Layout;
 
 export default function Dashboard() {
-  console.log({
-    TopVendorsColumns,
-    TopVendors,
-  });
   return (
     <Content style={{ padding: '0 24px' }}>
       <Row

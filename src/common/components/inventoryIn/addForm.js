@@ -36,7 +36,6 @@ export function AddInventoryInForm({
     form
       .validateFields()
       .then((values) => {
-        console.log({ values });
         onOk({ ...initialValues, ...values });
       })
       .catch(() => {
