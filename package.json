@@ -67,12 +67,13 @@
   },
   "build": {
     "productName": "Inventory",
+    "extends": null,
     "appId": "com.inventory-rajesh-exports",
     "files": [
       "dist/**/*.{js,css,html,ttf}"
     ],
     "directories": {
-      "buildResources": "./"
+      "buildResources": "assets"
     },
     "mac": {
       "category": "public.app-category.developer-tools",
