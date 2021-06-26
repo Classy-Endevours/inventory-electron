@@ -9,9 +9,6 @@
     "type": "git",
     "url": "https://github.com/Classy-Endevours/inventory-electron.git"
   },
-  "Linux": {
-    "target": "AppImage"
-  },
   "dependencies": {
     "@ant-design/charts": "^1.1.3",
     "@ant-design/icons": "^4.6.2",
@@ -70,19 +67,39 @@
   },
   "build": {
     "productName": "Inventory",
-    "extends": null,
     "appId": "com.inventory-rajesh-exports",
+    "files": [
+      "dist/**/*.{js,css,html,ttf}"
+    ],
     "directories": {
-      "buildResources": "assets"
-    }
-  },
-  "publish": [
-    {
+      "buildResources": "./"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "icons/icon.icns",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "entitlementsInherit": "build/entitlements.mac.inherit-plist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png",
+      "category": "Development"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png"
+    },
+    "publish": {
       "provider": "github",
-      "owner": "classy endevour",
-      "repo": "https://github.com/Classy-Endevours/inventory-electron.git"
-    }
-  ],
+      "repo": "https://github.com/Classy-Endevours/inventory-electron.git",
+      "owner": "classy endeveours",
+      "releaseType": "release"
+    },
+    "afterSign": "./build/afterSignHook.js"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
