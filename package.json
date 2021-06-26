@@ -70,7 +70,8 @@
     "extends": null,
     "appId": "com.inventory-rajesh-exports",
     "files": [
-      "dist/**/*.{js,css,html,ttf}"
+      "dist/**/*",
+      "package.json"
     ],
     "directories": {
       "buildResources": "assets"
