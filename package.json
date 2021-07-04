@@ -86,7 +86,7 @@
     },
     "publish": {
       "provider": "github",
-      "repo": "https://github.com/Classy-Endevours/inventory-electron",
+      "repo": "inventory-electron",
       "owner": "Classy-Endevours",
       "releaseType": "release"
     }
