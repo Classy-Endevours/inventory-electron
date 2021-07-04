@@ -63,6 +63,9 @@
     "directories": {
       "buildResources": "assets"
     },
+    "extraMetadata": {
+      "main": "build/main.js"
+    },
     "files": [
       "dist/**/*.{js,css,html,ttf}"
     ],
