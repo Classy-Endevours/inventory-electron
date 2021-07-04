@@ -87,7 +87,8 @@
     "publish": {
       "provider": "github",
       "repo": "inventory-electron",
-      "owner": "Classy-Endevours"
+      "owner": "Classy-Endevours",
+      "releaseType": "release"
     }
   },
   "repository": {
