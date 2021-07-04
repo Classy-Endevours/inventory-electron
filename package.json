@@ -66,9 +66,6 @@
     "extraMetadata": {
       "main": "build/main.js"
     },
-    "files": [
-      "dist/**/*.{js,css,html,ttf}"
-    ],
     "mac": {
       "category": "public.app-category.developer-tools",
       "icon": "icons/icon.icns",
@@ -92,8 +89,7 @@
       "repo": "reponame",
       "owner": "ownername",
       "releaseType": "release"
-    },
-    "afterSign": "./build/afterSignHook.js"
+    }
   },
   "eslintConfig": {
     "extends": [
