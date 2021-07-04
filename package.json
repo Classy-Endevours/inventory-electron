@@ -1,14 +1,9 @@
 {
   "name": "inventory-rajesh-exports",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "private": true,
   "main": "public/main.js",
   "homepage": "./",
-  "author": "Classy endevours",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Classy-Endevours/inventory-electron.git"
-  },
   "dependencies": {
     "@ant-design/charts": "^1.1.3",
     "@ant-design/icons": "^4.6.2",
@@ -48,12 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "release": "electron-builder",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
-    "package": "yarn electron:build --publish=always",
     "electron:start": "wait-on tcp:3000 && electron .",
     "postinstall": "electron-builder install-app-deps",
     "migration:create": "sequelize-cli migration:create --name",
@@ -69,42 +60,9 @@
     "productName": "Inventory",
     "extends": null,
     "appId": "com.inventory-rajesh-exports",
-    "files": [
-      "node_modules/**/*",
-      {
-        "from": "src",
-        "to": "build",
-        "filter": "**/*"
-      }
-    ],
     "directories": {
       "buildResources": "assets"
-    },
-    "mac": {
-      "category": "public.app-category.developer-tools",
-      "icon": "icons/icon.icns",
-      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-      "hardenedRuntime": true,
-      "entitlementsInherit": "build/entitlements.mac.inherit-plist"
-    },
-    "linux": {
-      "target": "AppImage",
-      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-      "icon": "icons/icon.png",
-      "category": "Development"
-    },
-    "win": {
-      "target": "nsis",
-      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
-      "icon": "icons/icon.png"
-    },
-    "publish": {
-      "provider": "github",
-      "repo": "https://github.com/Classy-Endevours/inventory-electron.git",
-      "owner": "classy endeveours",
-      "releaseType": "release"
-    },
-    "afterSign": "./build/afterSignHook.js"
+    }
   },
   "eslintConfig": {
     "extends": [
