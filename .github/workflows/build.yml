@@ -1,12 +1,18 @@
+# This is a basic workflow to help you get started with Actions
+
 name: Build/release
 
+# Controls when the action will run.
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches:
-      - main
-env:
-  CI: false
+      - master
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   release:
     runs-on: ${{ matrix.os }}
@@ -14,11 +20,13 @@ jobs:
     strategy:
       matrix:
         # os: [macOs-latest, ubuntu-latest, windows-latest]
+        # os: [windows-latest, macos-latest]
         os: [ubuntu-latest]
-
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
@@ -31,6 +39,8 @@ jobs:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
+          # use_vue_cli: true
+          args: '-p always'
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
