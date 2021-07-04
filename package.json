@@ -1,6 +1,6 @@
 {
   "name": "inventory-rajesh-exports",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "main": "public/main.js",
   "homepage": "./",
@@ -62,7 +62,38 @@
     "appId": "com.inventory-rajesh-exports",
     "directories": {
       "buildResources": "assets"
+    },
+    "extraMetadata": {
+      "main": "build/main.js"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "icons/icon.icns",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "entitlementsInherit": "build/entitlements.mac.inherit-plist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png",
+      "category": "Development"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png"
+    },
+    "publish": {
+      "provider": "github",
+      "repo": "inventory-electron",
+      "owner": "Classy-Endevours",
+      "releaseType": "release"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Classy-Endevours/inventory-electron.git"
   },
   "eslintConfig": {
     "extends": [

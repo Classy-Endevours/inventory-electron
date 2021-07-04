@@ -6,8 +6,9 @@ name: Build/release
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches:
-      - feature/auto-release
+    branch:
+      # Build on every tag in the form v1.2.3-something.4
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,9 +25,9 @@ jobs:
     strategy:
       matrix:
         # os: [macOs-latest, ubuntu-latest, windows-latest]
-        # os: [windows-latest]
+        # os: [ubuntu-latest]
         # os: [windows-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macOs-latest]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -43,10 +44,7 @@ jobs:
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-          # use_vue_cli: true
-          args: '-p always'
-
+          github_token: ${{ secrets.OWN_REPO_TOKEN }}
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: true
