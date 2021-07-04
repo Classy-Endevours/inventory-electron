@@ -62,7 +62,35 @@
     "appId": "com.inventory-rajesh-exports",
     "directories": {
       "buildResources": "assets"
-    }
+    },
+    "files": [
+      "dist/**/*.{js,css,html,ttf}"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "icons/icon.icns",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "entitlementsInherit": "build/entitlements.mac.inherit-plist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png",
+      "category": "Development"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "icon": "icons/icon.png"
+    },
+    "publish": {
+      "provider": "github",
+      "repo": "reponame",
+      "owner": "ownername",
+      "releaseType": "release"
+    },
+    "afterSign": "./build/afterSignHook.js"
   },
   "eslintConfig": {
     "extends": [
