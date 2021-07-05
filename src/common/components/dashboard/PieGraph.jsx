@@ -7,11 +7,9 @@ import Paragraph from 'antd/lib/typography/Paragraph';
 import { getAllSupplierGraph } from '../../../components/Dashboard/reducer';
 
 const PieGraph = () => {
-  const {
-    isLoading,
-    isError,
-    data: items,
-  } = useSelector((state) => state.DashboardReducer.allSuppliers);
+  const { isLoading, isError, data: items } = useSelector(
+    (state) => state.DashboardReducer.allSuppliers,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -6,11 +6,9 @@ import Paragraph from 'antd/lib/typography/Paragraph';
 import { getLineGraph } from '../../../components/Dashboard/reducer';
 
 const DemoLine = () => {
-  const {
-    isLoading,
-    isError,
-    data: items,
-  } = useSelector((state) => state.DashboardReducer.lineGraph);
+  const { isLoading, isError, data: items } = useSelector(
+    (state) => state.DashboardReducer.lineGraph,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

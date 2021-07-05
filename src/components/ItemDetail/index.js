@@ -65,11 +65,9 @@ const id = [1, 3, 4, 5];
 
 const ItemDetails = () => {
   const [selectedItems, setSelectedItems] = useState(id);
-  const {
-    isLoading,
-    isError,
-    data: comparisonitems,
-  } = useSelector((state) => state.DashboardReducer.comparison);
+  const { isLoading, isError, data: comparisonitems } = useSelector(
+    (state) => state.DashboardReducer.comparison,
+  );
   const { items } = useSelector((state) => state.ItemsReducer);
   const dispatch = useDispatch();
   const refreshPage = (ids) => {

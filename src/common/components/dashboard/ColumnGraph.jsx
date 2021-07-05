@@ -7,11 +7,9 @@ import Paragraph from 'antd/lib/typography/Paragraph';
 import { getColumnGraph } from '../../../components/Dashboard/reducer';
 
 const ColumnGraph = () => {
-  const {
-    isLoading,
-    isError,
-    data: items,
-  } = useSelector((state) => state.DashboardReducer.columnGraph);
+  const { isLoading, isError, data: items } = useSelector(
+    (state) => state.DashboardReducer.columnGraph,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
