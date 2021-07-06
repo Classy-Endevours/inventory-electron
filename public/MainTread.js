@@ -109,3 +109,8 @@ isDev
 isDev
   ? require('../controller/dashboardController')
   : require(`${path.join(__dirname, '', '../controller/dashboardController')}`);
+
+// include Settings Controller
+isDev
+  ? require('../controller/settingsController')
+  : require(`${path.join(__dirname, '', '../controller/settingsController')}`);

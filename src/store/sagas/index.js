@@ -107,4 +107,5 @@ export default function* watcherSagas() {
   yield takeLatest(getColumnGraph.type, columnGraphSaga);
   yield takeLatest(getAllSupplierGraph.type, allSupplierGraphSaga);
   yield takeLatest(getComparisonGraph.type, getComparisonGraphSaga);
+  yield takeLatest(getSetting.type, getBasicDetailsSaga);
 }

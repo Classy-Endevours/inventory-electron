@@ -21,10 +21,10 @@ function updateBasicDetails(payload) {
 }
 function getBasicDetails(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('items-fetch-reply', (_, arg) => {
+    ipcRenderer.once('settings-fetch-reply', (_, arg) => {
       resolve(arg);
     });
-    ipcRenderer.send('items-fetch-message', payload);
+    ipcRenderer.send('settings-fetch-message', payload);
   });
 }
 export function* basicDetailsSaga(action) {
@@ -45,4 +45,6 @@ export function* getBasicDetailsSaga() {
     yield put(getSettingFail({ message: error.message }));
   }
 }
-export default {};
+export default {
+  getBasicDetailsSaga,
+};

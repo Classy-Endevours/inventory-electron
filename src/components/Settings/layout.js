@@ -5,7 +5,7 @@ import {
   DashboardChildLayout,
   DashboardFixedLayout,
   DashboardMenu,
-  DashboardSider,
+  DashboardHeader,
 } from '../../common/uielements/Dasbord.styles';
 
 const Setting = ({ Components }) => {
@@ -19,15 +19,21 @@ const Setting = ({ Components }) => {
 
   return (
     <Layout>
-      <DashboardSider>
+      <DashboardHeader
+        style={{
+          padding: 0,
+        }}
+      >
         <DashboardMenu
-          mode="inline"
+          mode="horizontal"
           defaultSelectedKeys={[currentView]}
           defaultOpenKeys={['sub1']}
-          style={{
-            marginTop: '-4px',
-            height: 'calc(100% + 4px)',
-          }}
+          style={
+            {
+              // marginTop: '-4px',
+              // height: 'calc(100% + 4px)',
+            }
+          }
         >
           <DashboardMenu.Item key="1" onClick={() => setCurrentView('1')}>
             Application Setting
@@ -36,7 +42,7 @@ const Setting = ({ Components }) => {
             Security Setting
           </DashboardMenu.Item>
         </DashboardMenu>
-      </DashboardSider>
+      </DashboardHeader>
       <DashboardChildLayout>
         <DashboardFixedLayout style={{ paddingTop: 5 }}>
           {renderCurrentView()}

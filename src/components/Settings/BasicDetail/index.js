@@ -1,109 +1,93 @@
-/* eslint-disable no-empty */
-/* eslint-disable react/prop-types */
-import { Form, Input } from 'antd';
-import React, { useEffect } from 'react';
+/* eslint-disable no-param-reassign */
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSetting, getSetting } from './reducer';
-import { NewContentButton } from '../../../common/uielements/Collection.style';
-import { SpacedTitle } from '../../../common/uielements/Typo.style';
+import { Layout, Row, Col, Divider, Space } from 'antd';
+import { DownloadOutlined, FolderAddOutlined } from '@ant-design/icons';
+import { getSetting, addSettings, updateSetting } from './reducer';
+import {
+  ColorerdTable,
+  NewContentButton,
+} from '../../../common/uielements/Collection.style';
+import { getColumns } from './data';
+import { AddVendorForm } from '../../../common/components/vendor/addForm';
 
-const Basic = ({
-  initialValues = {
-    name: 'Raject Export',
-    address: 'sinn bulluin, summon state',
-    gstNo: '12121212121',
-  },
-}) => {
-  const { isLoading, success, fail } = useSelector(
+const { Content } = Layout;
+
+const Vendor = () => {
+  const [addVendorModal, setVendorModal] = useState(false);
+  const [mode, setMode] = useState('');
+  const [currentObject, setCurrentObject] = useState({});
+  const { isLoading, basicDetails, isAddLoading, isEditLoading } = useSelector(
     (state) => state.BasicSettingReducer,
   );
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getSetting());
   }, []);
-
-  useEffect(async () => {
-    if (success && !fail) {
-    } else if (!success && fail) {
-      // notification.error({
-      //   message: 'Error',
-      //   description: message,
-      //   duration: 2,
-      // });
+  const onOk = (data) => {
+    switch (mode) {
+      case 'new':
+        dispatch(addSettings(data));
+        break;
+      case 'edit':
+        dispatch(updateSetting(data));
+        break;
+      default:
+        break;
     }
-  }, [isLoading, success, fail]);
-
-  const [form] = Form.useForm();
-  const onSubmit = (values) => {
-    dispatch(updateSetting(values));
   };
-  const validate = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        onSubmit({ ...initialValues, ...values });
-      })
-      .catch(() => {
-        console.log('logged');
-      });
-  };
-
   return (
-    <Form
-      style={{ width: '80%' }}
-      form={form}
-      layout="vertical"
-      name="form_in_modal"
-      initialValues={initialValues}
-    >
-      <SpacedTitle level={3}>Basic Information</SpacedTitle>
-      <Form.Item
-        name="name"
-        label="Name of the owner"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the owner name!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="address"
-        label="Current Address"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the current address!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="gstNo"
-        label="GST No"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the GST Number!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item>
-        <NewContentButton
-          style={{ width: '100px', height: '35px' }}
-          type="primary"
-          onClick={validate}
-          htmlType="submit"
-        >
-          Save
-        </NewContentButton>
-      </Form.Item>
-    </Form>
+    <Content>
+      {addVendorModal && (
+        <AddVendorForm
+          title="Add New Vendor"
+          isOpen={addVendorModal}
+          onOk={(data) => onOk(data)}
+          onCancel={() => setVendorModal(!addVendorModal)}
+          initialValues={currentObject}
+          setCurrentObject={setCurrentObject}
+          loading={mode === 'new' ? isAddLoading : isEditLoading}
+        />
+      )}
+
+      <Row justify="end">
+        <Space>
+          <NewContentButton shape="round" icon={<DownloadOutlined />}>
+            Export Settings
+          </NewContentButton>
+          <NewContentButton
+            shape="round"
+            icon={<FolderAddOutlined />}
+            onClick={() => {
+              setMode('new');
+              setVendorModal(!addVendorModal);
+            }}
+          >
+            Add New details
+          </NewContentButton>
+          <div />
+          <div />
+          <div />
+        </Space>
+      </Row>
+      <Divider orientation="left" />
+      <Row justify="space-around">
+        <Col span={24}>
+          <ColorerdTable
+            columns={getColumns((row) => {
+              setCurrentObject(row);
+              setMode('edit');
+              setVendorModal(true);
+            })}
+            dataSource={basicDetails}
+            pagination={{ pageSize: 10 }}
+            style={{ padding: 10 }}
+            loading={isLoading}
+          />
+        </Col>
+      </Row>
+    </Content>
   );
 };
-export default Basic;
+export default Vendor;
