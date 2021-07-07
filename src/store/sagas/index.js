@@ -51,10 +51,14 @@ import {
 import {
   updateSetting,
   getSetting,
+  addSettings,
+  defaultSettings,
 } from '../../components/Settings/BasicDetail/reducer';
 import {
-  basicDetailsSaga,
+  updateBasicDetailsSaga,
   getBasicDetailsSaga,
+  settingsAddSaga,
+  settingsDefaultSaga,
 } from '../../components/Settings/BasicDetail/saga';
 import {
   getChallan,
@@ -96,8 +100,6 @@ export default function* watcherSagas() {
   yield takeLatest(getInventoryOuts.type, inventoryOutSaga);
   yield takeLatest(addInventoryOuts.type, inventoryOutAddSaga);
   yield takeLatest(editInventoryOuts.type, inventoryOutUpdateSaga);
-  yield takeLatest(updateSetting.type, basicDetailsSaga);
-  yield takeLatest(getSetting.type, getBasicDetailsSaga);
   yield takeLatest(getChallan.type, getChallanSaga);
   yield takeLatest(addChallan.type, challanAddSaga);
   yield takeLatest(editChallan.type, challanUpdateSaga);
@@ -107,5 +109,10 @@ export default function* watcherSagas() {
   yield takeLatest(getColumnGraph.type, columnGraphSaga);
   yield takeLatest(getAllSupplierGraph.type, allSupplierGraphSaga);
   yield takeLatest(getComparisonGraph.type, getComparisonGraphSaga);
+
+  // Setting Sagas
   yield takeLatest(getSetting.type, getBasicDetailsSaga);
+  yield takeLatest(addSettings.type, settingsAddSaga);
+  yield takeLatest(updateSetting.type, updateBasicDetailsSaga);
+  yield takeLatest(defaultSettings.type, settingsDefaultSaga);
 }

@@ -76,6 +76,24 @@ const BasicSettingSlice = createSlice({
       isAddSuccess: false,
       isAddError: true,
     }),
+    defaultSettings: (state) => ({
+      ...state,
+      isLoading: true,
+      isError: false,
+      isSuccess: false,
+    }),
+    defaultSettingsSuccess: (state) => ({
+      ...state,
+      isSuccess: true,
+      isError: false,
+      isLoading: false,
+    }),
+    defaultSettingsFailed: (state) => ({
+      ...state,
+      isSuccess: false,
+      isError: true,
+      isLoading: false,
+    }),
   },
 });
 
@@ -89,6 +107,9 @@ export const {
   addSettings,
   addSettingsFailed,
   addSettingsSuccess,
+  defaultSettings,
+  defaultSettingsSuccess,
+  defaultSettingsFailed,
 } = BasicSettingSlice.actions;
 
 export default BasicSettingSlice.reducer;

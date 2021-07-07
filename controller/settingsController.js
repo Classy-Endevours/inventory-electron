@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
+const { Op } = require('sequelize');
 
 const response = isDev
   ? require('../config/responseConfig')
@@ -68,5 +69,31 @@ ipcMain.on('settings-update-message', async (event, arg) => {
     }
   } catch (error) {
     event.reply('settings-update-reply', response.error(error.message));
+  }
+});
+
+ipcMain.on('settings-default-message', async (event, arg) => {
+  try {
+    const options = {
+      where: {
+        id: arg.id,
+      },
+    };
+
+    const item = await settings.update({ isDefault: true }, options);
+    options.where.id = { [Op.ne]: arg.id };
+    options.where.isDefault = true;
+    const newitem = await settings.update({ isDefault: false }, options);
+    if (item.length > 0) {
+      event.reply(
+        'settings-default-reply',
+        response.success('Settings Updated successfully', item),
+      );
+    } else {
+      const err = new Error('No settings Updated');
+      throw err;
+    }
+  } catch (error) {
+    event.reply('settings-default-reply', response.error(error.message));
   }
 });

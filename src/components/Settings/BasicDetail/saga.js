@@ -1,10 +1,17 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-extraneous-dependencies */
 import { put } from 'redux-saga/effects';
+import { notification } from 'antd';
 import {
   updateSettingSuccess,
   updateSettingFail,
   getSettingFail,
   getSettingSuccess,
+  addSettingsSuccess,
+  getSetting,
+  addSettingsFailed,
+  defaultSettingsSuccess,
+  defaultSettingsFailed,
 } from './reducer';
 
 const electron = window.require('electron');
@@ -13,10 +20,27 @@ const { ipcRenderer } = electron;
 
 function updateBasicDetails(payload) {
   return new Promise((resolve) => {
-    ipcRenderer.once('basicDetails-reply', (_, arg) => {
+    ipcRenderer.once('settings-update-reply', (_, arg) => {
       resolve(arg);
     });
-    ipcRenderer.send('basicDetails-message', payload);
+    const arg = {
+      where: {
+        id: payload.id,
+      },
+    };
+    delete payload.id;
+    delete payload.updatedAt;
+    delete payload.createdAt;
+    arg.values = { ...payload };
+    ipcRenderer.send('settings-update-message', arg);
+  });
+}
+function defaultBasicDetails(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('settings-default-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('settings-default-message', payload);
   });
 }
 function getBasicDetails(payload) {
@@ -27,16 +51,44 @@ function getBasicDetails(payload) {
     ipcRenderer.send('settings-fetch-message', payload);
   });
 }
-export function* basicDetailsSaga(action) {
+function addBasicDetails(payload) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('settings-create-reply', (_, arg) => {
+      resolve(arg);
+    });
+    payload.isDefault = false;
+    ipcRenderer.send('settings-create-message', payload);
+  });
+}
+function* updateBasicDetailsSaga(action) {
   try {
     const response = yield updateBasicDetails(action.payload);
-    if (!response.error) yield put(updateSettingSuccess(response));
-    else yield put(updateSettingFail(response));
+    if (!response.error) {
+      yield put(updateSettingSuccess(response));
+      yield put(getSetting());
+      notification.success({
+        message: 'Success',
+        description: response.message,
+        duration: 2,
+      });
+    } else {
+      yield put(updateSettingFail(response));
+      notification.error({
+        message: 'Error',
+        description: response.message,
+        duration: 2,
+      });
+    }
   } catch (error) {
     yield put(updateSettingFail({ message: error.message }));
+    notification.error({
+      message: 'Error',
+      description: error.message,
+      duration: 2,
+    });
   }
 }
-export function* getBasicDetailsSaga() {
+function* getBasicDetailsSaga() {
   try {
     const response = yield getBasicDetails();
     if (!response.error) yield put(getSettingSuccess(response));
@@ -45,6 +97,65 @@ export function* getBasicDetailsSaga() {
     yield put(getSettingFail({ message: error.message }));
   }
 }
-export default {
+function* settingsAddSaga(action) {
+  try {
+    const response = yield addBasicDetails(action.payload);
+    if (!response.error) {
+      yield put(addSettingsSuccess(response));
+      yield put(getSetting());
+      notification.success({
+        message: 'Success',
+        description: response.message,
+        duration: 2,
+      });
+    } else {
+      yield put(addSettingsFailed(response));
+      notification.error({
+        message: 'Error',
+        description: response.message,
+        duration: 2,
+      });
+    }
+  } catch (error) {
+    yield put(addSettingsFailed({ message: error.message }));
+    notification.error({
+      message: 'Error',
+      description: error.message,
+      duration: 2,
+    });
+  }
+}
+function* settingsDefaultSaga(action) {
+  try {
+    const response = yield defaultBasicDetails(action.payload);
+    if (!response.error) {
+      yield put(defaultSettingsSuccess(response));
+      yield put(getSetting());
+      notification.success({
+        message: 'Success',
+        description: response.message,
+        duration: 2,
+      });
+    } else {
+      yield put(defaultSettingsFailed(response));
+      notification.error({
+        message: 'Error',
+        description: response.message,
+        duration: 2,
+      });
+    }
+  } catch (error) {
+    yield put(defaultSettingsFailed({ message: error.message }));
+    notification.error({
+      message: 'Error',
+      description: error.message,
+      duration: 2,
+    });
+  }
+}
+export {
   getBasicDetailsSaga,
+  updateBasicDetailsSaga,
+  settingsAddSaga,
+  settingsDefaultSaga,
 };

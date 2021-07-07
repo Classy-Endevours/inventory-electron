@@ -9,7 +9,7 @@ import {
   NewContentButton,
 } from '../../../common/uielements/Collection.style';
 import { getColumns } from './data';
-import { AddVendorForm } from '../../../common/components/vendor/addForm';
+import { AddSettingsForm } from '../../../common/components/settings/addForm';
 
 const { Content } = Layout;
 
@@ -40,8 +40,8 @@ const Vendor = () => {
   return (
     <Content>
       {addVendorModal && (
-        <AddVendorForm
-          title="Add New Vendor"
+        <AddSettingsForm
+          title="Add New Settings"
           isOpen={addVendorModal}
           onOk={(data) => onOk(data)}
           onCancel={() => setVendorModal(!addVendorModal)}
