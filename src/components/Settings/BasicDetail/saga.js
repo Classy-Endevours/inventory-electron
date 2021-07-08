@@ -69,6 +69,7 @@ function* updateBasicDetailsSaga(action) {
     if (!response.error) {
       yield put(updateSettingSuccess(response));
       yield put(getSetting());
+      yield put(getDefaultSetting());
       notification.success({
         message: 'Success',
         description: response.message,
