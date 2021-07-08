@@ -3,7 +3,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import 'antd/dist/antd.css';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import Dashboard from '../Dashboard';
 import {
   DashboardSider,
@@ -18,10 +18,11 @@ import { clear } from '../Login/reducer';
 export default function HomePage({ MainComponent }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { defaultSettings } = useSelector((state) => state.BasicSettingReducer);
   return (
     <DashboardParentLayout>
       <DashboardHeader className="header" theme="light">
-        <b>Rajesh Exports</b>
+        <b>{defaultSettings.name}</b>
       </DashboardHeader>
       <Layout>
         <DashboardSider>

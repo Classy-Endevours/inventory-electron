@@ -5,7 +5,7 @@ const path = require('path');
 const response = isDev
   ? require('../config/responseConfig')
   : require(`${path.join(__dirname, '', '../config/responseConfig')}`);
-const { challan, items, inventoryOut, vendor } = isDev
+const { challan, items, inventoryOut, vendor, settings } = isDev
   ? require('../models')
   : require(`${path.join(__dirname, '', '../models')}`);
 
@@ -22,6 +22,7 @@ ipcMain.on('challan-create-message', async (event, arg) => {
       throw err;
     }
   } catch (error) {
+    console.log({ error });
     event.reply('challan-create-reply', response.error(error.message));
   }
 });
@@ -42,6 +43,7 @@ ipcMain.on('challan-fetch-message', async (event, arg) => {
         model: inventoryOut,
         include: [vendor],
       },
+      settings,
     ];
     options.raw = true;
     options.nest = true;

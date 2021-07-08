@@ -5,6 +5,7 @@ import { Form, Input, InputNumber } from 'antd';
 import Title from 'antd/lib/typography/Title';
 // eslint-disable-next-line import/no-unresolved
 import { useReactToPrint } from 'react-to-print';
+import { useSelector } from 'react-redux';
 import { CustomModal } from '../../uielements/Modal.style';
 import {
   NewContentButton,
@@ -27,12 +28,17 @@ export function ChallanForm({
   const handlePrint = useReactToPrint({
     content: () => ref.current,
   });
+  const { defaultSettings } = useSelector((state) => state.BasicSettingReducer);
   const validate = () => {
     form
       .validateFields()
       .then((values) => {
         handlePrint();
-        onOk({ ...initialValues, ...values });
+        onOk({
+          ...initialValues,
+          ...values,
+          ...{ settingsId: defaultSettings.id },
+        });
       })
       .catch(() => {
         console.log('logged');
@@ -80,9 +86,10 @@ export function ChallanForm({
           initialValues={initialValues}
         >
           <Form.Item>
-            <Title level={2}>Rajesh Export</Title>
-            <p>Rajesh export address</p>
-            <p>Rajesh export GST number</p>
+            <Title level={2}>{defaultSettings.name}</Title>
+            <Title level={5}>Mobile: {defaultSettings.mobile1}</Title>
+            <Title level={5}>Address: {defaultSettings.address}</Title>
+            <Title level={5}>GST No.: {defaultSettings.gstNo}</Title>
           </Form.Item>
           <Form.Item
             name="productName"

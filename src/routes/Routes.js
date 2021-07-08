@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
@@ -7,6 +8,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Login from '../components/Login';
 import HomePage from '../components/HomePage';
 import Dashboard from '../components/Dashboard';
@@ -18,6 +20,7 @@ import InventoryOut from '../components/inventoryOut';
 import Setting from '../components/Settings';
 import Challan from '../components/Challan';
 import ItemDetail from '../components/ItemDetail';
+import Loader from '../components/Loader';
 
 function Routes() {
   // let location = useLocation();
@@ -27,6 +30,9 @@ function Routes() {
         <PublicRoute exact path="/">
           <Login />
         </PublicRoute>
+        <PrivateRoute path="/Loader">
+          <Loader />
+        </PrivateRoute>
         <PrivateRoute path="/Dashboard">
           <HomePage MainComponent={Dashboard} />
         </PrivateRoute>
@@ -71,7 +77,7 @@ function PublicRoute({ children, ...rest }) {
         login ? (
           <Redirect
             to={{
-              pathname: '/Dashboard',
+              pathname: '/Loader',
               state: { from: location },
             }}
           />
@@ -86,12 +92,17 @@ function PublicRoute({ children, ...rest }) {
 // Define Private Route
 function PrivateRoute({ children, ...rest }) {
   const login = localStorage.getItem('login') === 'true';
+  const { defaultSettings } = useSelector((state) => state.BasicSettingReducer);
   return (
     <Route
       {...rest}
       render={({ location }) =>
         login ? (
-          children
+          Object.keys(defaultSettings).length > 0 ? (
+            children
+          ) : (
+            <Loader />
+          )
         ) : (
           <Redirect
             to={{

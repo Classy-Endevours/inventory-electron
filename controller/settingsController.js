@@ -30,7 +30,7 @@ ipcMain.on('settings-create-message', async (event, arg) => {
 ipcMain.on('settings-fetch-message', async (event, arg) => {
   try {
     const options = {
-      order: [['updatedAt', 'DESC']],
+      order: [['isDefault', 'DESC']],
     };
     if (arg?.where) options.where = arg.where;
     if (arg?.offset) {

@@ -17,7 +17,6 @@ const { ipcRenderer } = electron;
 function getChallanDb(payload) {
   return new Promise((resolve) => {
     ipcRenderer.once('challan-fetch-reply', (_, arg) => {
-      console.log({ arg });
       resolve(arg);
     });
     ipcRenderer.send('challan-fetch-message', payload);
@@ -72,6 +71,7 @@ function* challanAddSaga(action) {
       productName: action.payload.productName,
       inventoryOutId: action.payload.id,
       truckNo: action.payload.truckNo,
+      settingsId: action.payload.settingsId,
     };
     const response = yield addChallan(action.payload);
     if (!response.error) {

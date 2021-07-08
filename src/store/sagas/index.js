@@ -53,12 +53,14 @@ import {
   getSetting,
   addSettings,
   defaultSettings,
+  getDefaultSetting,
 } from '../../components/Settings/BasicDetail/reducer';
 import {
   updateBasicDetailsSaga,
   getBasicDetailsSaga,
   settingsAddSaga,
   settingsDefaultSaga,
+  getDefaultBasicDetailsSaga,
 } from '../../components/Settings/BasicDetail/saga';
 import {
   getChallan,
@@ -115,4 +117,5 @@ export default function* watcherSagas() {
   yield takeLatest(addSettings.type, settingsAddSaga);
   yield takeLatest(updateSetting.type, updateBasicDetailsSaga);
   yield takeLatest(defaultSettings.type, settingsDefaultSaga);
+  yield takeLatest(getDefaultSetting.type, getDefaultBasicDetailsSaga);
 }

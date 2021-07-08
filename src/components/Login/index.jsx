@@ -30,7 +30,7 @@ export default function Login() {
         duration: 2,
       });
       localStorage.setItem('login', true);
-      history.push('/Dashboard');
+      history.push('/Loader');
     } else if (!success && fail) {
       notification.error({
         message: 'Error',

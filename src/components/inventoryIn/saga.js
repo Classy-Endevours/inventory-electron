@@ -17,7 +17,6 @@ const { ipcRenderer } = electron;
 function getInventoryInsDb(payload) {
   return new Promise((resolve) => {
     ipcRenderer.once('inventoryIn-fetch-reply', (_, arg) => {
-      console.log(arg);
       resolve(arg);
     });
     ipcRenderer.send('inventoryIn-fetch-message', payload);

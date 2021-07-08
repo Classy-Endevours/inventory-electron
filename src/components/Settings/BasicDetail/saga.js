@@ -12,6 +12,9 @@ import {
   addSettingsFailed,
   defaultSettingsSuccess,
   defaultSettingsFailed,
+  getDefaultSettingSuccess,
+  getDefaultSettingFail,
+  getDefaultSetting,
 } from './reducer';
 
 const electron = window.require('electron');
@@ -131,6 +134,7 @@ function* settingsDefaultSaga(action) {
     if (!response.error) {
       yield put(defaultSettingsSuccess(response));
       yield put(getSetting());
+      yield put(getDefaultSetting());
       notification.success({
         message: 'Success',
         description: response.message,
@@ -153,9 +157,19 @@ function* settingsDefaultSaga(action) {
     });
   }
 }
+function* getDefaultBasicDetailsSaga(action) {
+  try {
+    const response = yield getBasicDetails(action.payload);
+    if (!response.error) yield put(getDefaultSettingSuccess(response));
+    else yield put(getDefaultSettingFail(response));
+  } catch (error) {
+    yield put(getDefaultSettingFail({ message: error.message }));
+  }
+}
 export {
   getBasicDetailsSaga,
   updateBasicDetailsSaga,
   settingsAddSaga,
   settingsDefaultSaga,
+  getDefaultBasicDetailsSaga,
 };

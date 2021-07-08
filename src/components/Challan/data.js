@@ -19,6 +19,14 @@ export const getColumns = () => [
     // defaultSortOrder: 'descend',
   },
   {
+    title: 'Name',
+    dataIndex: 'setting',
+    sorter: (a, b) => a.name.localeCompare(b.name),
+    render: (setting) => {
+      return <ColoredRow>{setting.name}</ColoredRow>;
+    },
+  },
+  {
     title: 'Item Name',
     dataIndex: 'productName',
     // specify the condition of filtering result

@@ -17,7 +17,6 @@ const { ipcRenderer } = electron;
 function getItemsDb(payload) {
   return new Promise((resolve) => {
     ipcRenderer.once('items-fetch-reply', (_, arg) => {
-      console.log({ arg });
       resolve(arg);
     });
     ipcRenderer.send('items-fetch-message', payload);

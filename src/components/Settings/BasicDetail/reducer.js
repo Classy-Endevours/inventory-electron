@@ -14,6 +14,7 @@ const BasicSettingSlice = createSlice({
     isEditSuccess: false,
     isEditError: false,
     basicDetails: [],
+    defaultSettings: {},
   },
   reducers: {
     updateSetting: (state) => ({
@@ -94,6 +95,27 @@ const BasicSettingSlice = createSlice({
       isError: true,
       isLoading: false,
     }),
+    getDefaultSetting: (state) => ({
+      ...state,
+      isLoading: true,
+      isError: false,
+      isSuccess: false,
+    }),
+    getDefaultSettingSuccess: (state, action) => ({
+      ...state,
+      defaultSettings: action.payload.data.settings[0],
+      message: action.payload.message,
+      isSuccess: true,
+      isError: false,
+      isLoading: false,
+    }),
+    getDefaultSettingFail: (state, action) => ({
+      ...state,
+      message: action.payload.message,
+      isSuccess: false,
+      isError: true,
+      isLoading: false,
+    }),
   },
 });
 
@@ -110,6 +132,9 @@ export const {
   defaultSettings,
   defaultSettingsSuccess,
   defaultSettingsFailed,
+  getDefaultSetting,
+  getDefaultSettingSuccess,
+  getDefaultSettingFail,
 } = BasicSettingSlice.actions;
 
 export default BasicSettingSlice.reducer;
